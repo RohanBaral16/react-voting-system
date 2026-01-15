@@ -8,7 +8,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
     className?: string
 }
 
-export default function InputText({className, variant='short', type='text', ...props}: InputProps){
+export default function Input({className, variant='short', type='text', ...props}: InputProps){
 
     const variants={
         short: 'w-1/2',
