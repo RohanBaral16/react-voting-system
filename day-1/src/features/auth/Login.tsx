@@ -3,7 +3,7 @@ import Button from '../../components/ui/button'
 import { useContext, useEffect, useState} from 'react'
 import Input from '../../components/ui/input'
 import { AuthContext } from '../../context/authContext'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 type FormDataType = {
   voterId: string
@@ -37,10 +37,10 @@ export default function Login(){
         }
     },[user, navigate])
     return(
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#3C9C9A]  to-[#e6ffff]">
+            <div className="min-h-screen flex items-center justify-center bg-linear-to-r from-[#3C9C9A]  to-[#e6ffff]">
                 <form 
                     onSubmit={handleSubmit(onSubmit)}
-                    className="w-full max-w-[500px] bg-white border border-gray-200 rounded-xl p-8 shadow-lg space-y-6 my-5"
+                    className="w-full max-w-125 bg-white border border-gray-200 rounded-xl p-8 shadow-lg space-y-6 my-5"
                 >
 
                     {/* Title */}
@@ -97,6 +97,11 @@ export default function Login(){
                                 </p>
                             )
                         }
+                    </div>
+
+                    <div className='flex justify-between text-blue-700'>
+                        <Link className='cursor-pointer' to='/forgotpassword'>Forgot Password?</Link>
+                        <Link className='cursor-pointer' to='/register'>Voter Registration</Link>
                     </div>
 
                     {

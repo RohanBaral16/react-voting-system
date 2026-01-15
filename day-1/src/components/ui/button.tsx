@@ -16,7 +16,7 @@ const variants = {
 
 }
 
-const baseStyles = 'px-4 py-2 rounded-lg font-medium transition-all focus:ring-2'
+const baseStyles = 'px-4 py-2 rounded-lg font-medium transition-all focus:ring-2 cursor-pointer'
 
     return(
         <button className={cn(baseStyles, variants[variant], className)}

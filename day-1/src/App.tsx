@@ -5,6 +5,7 @@ import ForgotPassword from './features/auth/ForgotPassword'
 import Register from './features/auth/Register'
 import MainLayout from './layout/MainLayout'
 import Dashboard from './features/voting/dashboard'
+import ProtectedRoute from './api/routes/ProtectedRoute'
 function App() {
 
   return (
@@ -16,7 +17,7 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/forgotpassword' element={<ForgotPassword/>}/>
           <Route path='/register' element={<Register/>}/>
-          <Route path='dashboard' element={<Dashboard/>}/>
+          <Route path='/dashboard' element={<ProtectedRoute><Dashboard/></ProtectedRoute>}/>
         </Route>
       </Routes>
     </>

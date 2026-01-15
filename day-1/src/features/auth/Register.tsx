@@ -21,10 +21,9 @@ type FormDataType = {
 
 }
 
-type Province = keyof typeof locationData
 
 export default function Register(){
-    const {register, watch, handleSubmit, setValue, getValues,  reset, formState:{errors, isValid, isDirty}} = useForm<FormDataType>()
+    const {register, watch, handleSubmit, setValue, reset, formState:{errors}} = useForm<FormDataType>()
 
     const password = watch('password')
     const province = watch("province");
@@ -58,10 +57,10 @@ export default function Register(){
   }
 
     return(
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#020024] via-[#090979] to-[#00D4FF]">
+            <div className="min-h-screen flex items-center justify-center bg-linear-to-r from-[#3C9C9A]  to-[#e6ffff]">
                 <form 
                     onSubmit={handleSubmit(onSubmit)}
-                    className="w-full max-w-[500px] bg-white border border-gray-200 rounded-xl p-8 shadow-lg space-y-6 my-5"
+                    className="w-full max-w-125 bg-white border border-gray-200 rounded-xl p-8 shadow-lg space-y-6 my-5"
                 >
 
                     {/* Title */}
