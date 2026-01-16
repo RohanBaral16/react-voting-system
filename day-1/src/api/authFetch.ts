@@ -12,10 +12,17 @@ export const login = async(voterId: string, password: string)=>{
         body: JSON.stringify({voterId, password})
     }) 
 
-    if (!res.ok){
-        const error = await res.json()
-        throw new Error(error.message || 'Login failed')
+    if (!res.ok) {
+    let errorMessage = 'Login failed';
+    try {
+      const errorData = await res.json();
+      errorMessage = errorData.message || errorMessage;
+    } catch (e) {
+      // Fallback if the server didn't return JSON
+      if (res.status === 401) errorMessage = 'Invalid Voter ID or Password';
     }
+    throw new Error(errorMessage);
+  }
 
     return res.json()
 }

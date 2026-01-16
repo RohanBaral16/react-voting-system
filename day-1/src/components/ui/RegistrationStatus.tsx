@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom"
-import type { Dispatch, SetStateAction } from "react"
+import type { Dispatch, SetStateAction, PropsWithChildren } from "react"
 import { SiTicktick } from "react-icons/si";
 
+
 export type StatusType = 'processing' | 'successful' | 'failed'
-export interface RegistrationStatusProps  {
+export interface RegistrationStatusProps extends PropsWithChildren {
     status: StatusType,
     setStatus: Dispatch<SetStateAction<StatusType>>
 }

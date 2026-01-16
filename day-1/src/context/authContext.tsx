@@ -46,8 +46,8 @@ export  const AuthProvider = ({children}: {children: ReactNode})=>{
             setError(null)
         }catch(err: any){
             setUser(null)
-            setError(err.message || 'Failed to Login')
             throw err
+            
         }finally{
             setLoading(false)
         }
