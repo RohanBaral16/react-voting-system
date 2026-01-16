@@ -4,7 +4,9 @@ import Button from "../../components/ui/button"
 import Input from "../../components/ui/input"
 import { locationData } from "../../demoData"
 import RegistrationStatus, { type StatusType } from "../../components/ui/RegistrationStatus"
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { AuthContext } from "../../context/authContext"
+import { useNavigate } from "react-router-dom"
 
 type FormDataType = {
     name: string,
@@ -25,6 +27,10 @@ type FormDataType = {
 
 export default function Register(){
     const {register, watch, handleSubmit, setValue, reset, formState:{errors}} = useForm<FormDataType>()
+
+    const {user} = useContext(AuthContext)
+
+    const navigate = useNavigate()
 
     const [registrationStatus, setRegistrationStatus] = useState<StatusType>('processing')
     const password = watch('password')
@@ -51,6 +57,9 @@ export default function Register(){
 
         return age >= 18 || 'You must be at least 18 years old.'
 
+    }
+    if(user){
+        navigate('/dashboard')
     }
 
     if(registrationStatus === 'successful' || registrationStatus === 'failed'){

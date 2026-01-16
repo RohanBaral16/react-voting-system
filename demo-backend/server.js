@@ -14,6 +14,18 @@ let votersData = JSON.parse(fs.readFileSync(dataPath, 'utf-8')).voters;
 
 // ---------- MIDDLEWARES ----------
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Delay middleware
+const delayMiddleware = async (req, res, next) => {
+  console.log(`Delaying request for 2 seconds...`);
+  await delay(2000); // 2000 milliseconds = 2 seconds
+  next();
+};
+
+// Apply to all routes
+
+
 app.use(cors({
   origin: 'http://localhost:5173', 
   credentials: true,
@@ -34,10 +46,14 @@ app.use(session({
   }
 }));
 
+app.use(delayMiddleware);
+
 // ---------- ROUTES ----------
 
 // Login
 // server.js
+
+
 
 app.post('/login', (req, res) => {
   const { voterId, password } = req.body;

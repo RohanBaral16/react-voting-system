@@ -15,18 +15,9 @@ export default function Dashboard(){
         }
     }, [user, navigate, loading])
 
-    async function userLogOut(){
-        try{
-            await logout()
-        }catch(err: any){
-            console.log('Logout error: ', err)
-        }
-    }
-
     return(
         <>
             <p className="text-gray-900">{`Username: ${user?.name}, Voter-id: ${user?.voterId}`}</p>
-            <Button onClick={async()=>{userLogOut()}} variant="secondary">Logout</Button>
         </>
     ) 
 }

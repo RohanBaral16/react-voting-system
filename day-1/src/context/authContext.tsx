@@ -39,6 +39,7 @@ export  const AuthProvider = ({children}: {children: ReactNode})=>{
 
     const login = async (voterId: string, password: string)=>{
         try{
+            setLoading(true)
             const profile = await apiLogin(voterId, password)
             console.log('login successful', profile)
             setUser(profile)
@@ -47,6 +48,8 @@ export  const AuthProvider = ({children}: {children: ReactNode})=>{
             setUser(null)
             setError(err.message || 'Failed to Login')
             throw err
+        }finally{
+            setLoading(false)
         }
         
     }
@@ -73,12 +76,16 @@ export  const AuthProvider = ({children}: {children: ReactNode})=>{
     //logout logic
     const logout = async()=>{
         try{
+            setLoading(true)
             await apiLogout()
             setUser(null)
             setError(null)
+
         }catch(err: any){
             setError(err.message || 'Failed to Logout')
             throw err
+        }finally{
+            setLoading(false)
         }
     }
 
