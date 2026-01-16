@@ -37,10 +37,12 @@ export default function Login(){
         }
     },[user, navigate])
     return(
-            <div className="min-h-screen flex items-center justify-center bg-linear-to-r from-[#3C9C9A]  to-[#e6ffff]">
+            <div className="grow flex items-center justify-center 
+            bg-[#78CDD7]"
+             >
                 <form 
                     onSubmit={handleSubmit(onSubmit)}
-                    className="w-full max-w-125 bg-white border border-gray-200 rounded-xl p-8 shadow-lg space-y-6 my-5"
+                    className="w-full max-w-125 bg-white border border-gray-200 rounded-xl p-8 shadow-lg space-y-6 mt-2"
                 >
 
                     {/* Title */}
@@ -53,7 +55,7 @@ export default function Login(){
                             <Input 
                                 placeholder="12345XXXX"
                                 variant="long"
-                                {...register('voterId', {required: 'VoterId is required'})}
+                                {...register('voterId', {required: 'Please enter your Voter ID'})}
                             />
                             {
                                 errors.voterId &&
@@ -77,16 +79,7 @@ export default function Login(){
                         {...register(
                             'password',
                             {
-                                required: 'New Password field is required.',
-                                minLength:{
-                                    value: 8,
-                                    message: 'Please type at least 8 characters',
-                                },
-                                pattern:{
-                                    value: /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
-                                    message: 'Password must contain atleast one uppercase, alphanumeric, and symbol.'
-                                }
-                            }
+                                required: 'Please enter your password'}
                         )}
                         />
                         {
@@ -100,8 +93,8 @@ export default function Login(){
                     </div>
 
                     <div className='flex justify-between text-blue-700'>
-                        <Link className='cursor-pointer' to='/forgotpassword'>Forgot Password?</Link>
-                        <Link className='cursor-pointer' to='/register'>Voter Registration</Link>
+                        <Link className='cursor-pointer visited:text-blue-950' to='/forgotpassword'>Forgot Password?</Link>
+                        <Link className='cursor-pointer  visited:text-blue-950' to='/register'>Voter Registration</Link>
                     </div>
 
                     {
