@@ -38,21 +38,20 @@ export  const AuthProvider = ({children}: {children: ReactNode})=>{
     //login logic
 
     const login = async (voterId: string, password: string)=>{
-        try{
-            setLoading(true)
-            const profile = await apiLogin(voterId, password)
-            console.log('login successful', profile)
-            setUser(profile)
-            setError(null)
-        }catch(err: any){
-            setUser(null)
-            throw err
-            
-        }finally{
-            setLoading(false)
-        }
-        
+    try{
+        setLoading(true)
+        const profile = await apiLogin(voterId, password)
+        console.log('login successful', profile)
+        setUser(profile)
+        setError(null)
+    }catch(err: any){
+        setUser(null)
+        setError(err.message || 'Login failed')
+        throw err
+    }finally{
+        setLoading(false)
     }
+}
 
     //refresh logic
 

@@ -13,11 +13,17 @@ type FormDataType = {
 export default function Login(){
     const {register, handleSubmit, reset, formState:{errors}} = useForm<FormDataType>()
 
-    const {user, login} = useContext(AuthContext)
+    const {user, login, error:contextError} = useContext(AuthContext)
     const navigate = useNavigate()
     const [error, setError] = useState<string|null>(null)
 
     const errorTextClass = "text-sm text-red-600"
+
+    useEffect(()=>{
+        if(contextError){
+            setError(contextError)
+        }
+    }, [contextError])
 
     const onSubmit = async(data: FormDataType): Promise<void> =>{
         // logic for login, and navigate to dashboard
@@ -38,7 +44,7 @@ export default function Login(){
     },[user, navigate])
     return(
             <div className="grow flex items-center justify-center 
-            bg-[#78CDD7]"
+            bg-[#fffffA]"
              >
                 <form 
                     onSubmit={handleSubmit(onSubmit)}
