@@ -1,104 +1,298 @@
-const express = require('express');
-const session = require('express-session');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const fs = require('fs');
-const path = require('path');
+import express from "express";
+import session from "express-session";
+import cors from "cors";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+/**
+ * ============================
+ * Setup
+ * ============================
+ */
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = 5000;
 
-// Load voters from JSON file
-const dataPath = path.join(__dirname, 'voters.json');
-let votersData = JSON.parse(fs.readFileSync(dataPath, 'utf-8')).voters;
+/**
+ * ============================
+ * Helpers
+ * ============================
+ */
+const readJSON = (file) =>
+  JSON.parse(fs.readFileSync(path.join(__dirname, "data", file), "utf-8"));
 
-// ---------- MIDDLEWARES ----------
+const writeJSON = (file, data) =>
+  fs.writeFileSync(
+    path.join(__dirname, "data", file),
+    JSON.stringify(data, null, 2)
+  );
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+/**
+ * ============================
+ * Global Middleware
+ * ============================
+ */
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-// Delay middleware
-const delayMiddleware = async (req, res, next) => {
-  console.log(`Delaying request for 2 seconds...`);
-  await delay(2000); // 2000 milliseconds = 2 seconds
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
+/**
+ * ============================
+ * Session
+ * ============================
+ */
+app.use(
+  session({
+    name: "e-voting.sid",
+    secret: "dev-secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60,
+    },
+  })
+);
+
+/**
+ * ============================
+ * REQUEST / RESPONSE LOGGER
+ * ============================
+ */
+app.use((req, res, next) => {
+  console.log("\n==============================");
+  console.log("➡️  REQUEST");
+  console.log(`${req.method} ${req.originalUrl}`);
+  console.log("Cookies:", req.headers.cookie || "None");
+  console.log("Session:", req.session);
+  console.log("Body:", req.body);
+
+  const originalJson = res.json.bind(res);
+  res.json = (data) => {
+    console.log("⬅️  RESPONSE");
+    console.log("Status:", res.statusCode);
+    console.log("Data:", data);
+    console.log("==============================\n");
+    return originalJson(data);
+  };
+
+  next();
+});
+
+/**
+ * ============================
+ * Guards
+ * ============================
+ */
+const requireAuth = (req, res, next) => {
+  if (!req.session.user) {
+    return res.status(401).json({ message: "Not authenticated" });
+  }
   next();
 };
 
-// Apply to all routes
-
-
-app.use(cors({
-  origin: 'http://localhost:5173', 
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
-
-app.use(bodyParser.json());
-
-app.use(session({
-  secret: 'supersecret123',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    secure: false, // set true if HTTPS
-    maxAge: 1000 * 60 * 60
+const requireVerified = (req, res, next) => {
+  if (!req.session.user.verified) {
+    return res.status(403).json({ message: "Voter not verified" });
   }
-}));
+  next();
+};
 
-app.use(delayMiddleware);
-
-// ---------- ROUTES ----------
-
-// Login
-// server.js
-
-
-
-app.post('/login', (req, res) => {
+/**
+ * ============================
+ * AUTH
+ * ============================
+ */
+app.post("/api/auth/login", (req, res) => {
   const { voterId, password } = req.body;
+  const voters = readJSON("voters.json").voters;
 
-  const user = votersData.find(u => u.voterId === voterId && u.password === password);
-  if (!user) return res.status(401).json({ message: 'Invalid credentials' });
+  const voter = voters.find(
+    (v) => v.voterId === voterId && v.password === password
+  );
 
-  req.session.userId = user.voterId;
+  if (!voter) {
+    return res.status(401).json({ message: "Invalid credentials" });
+  }
 
-  // Return both name and voterId to satisfy your TypeScript UserType
-  res.json({
-    voterId: user.voterId,
-    name: user.name
+  req.session.user = {
+    voterId: voter.voterId,
+    name: voter.name,
+    province: voter.province,
+    district: voter.district,
+    constituency: voter.constituency,
+    verified: voter.verified || false,
+    hasVotedFPTP: voter.hasVotedFPTP || false,
+    hasVotedPR: voter.hasVotedPR || false,
+  };
+
+  res.json(req.session.user);
+});
+
+app.post("/api/auth/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.clearCookie("e-voting.sid");
+    res.json({ message: "Logged out" });
   });
 });
 
-// /me route
-app.get('/me', (req, res) => {
-  const userId = req.session.userId;
-  if (!userId) return res.status(401).json({ message: 'Not logged in' });
+app.get("/api/voter/profile", requireAuth, (req, res) => {
+  res.json(req.session.user);
+});
 
-  const user = votersData.find(u => u.voterId === userId);
+/**
+ * ============================
+ * REGISTRATION & VERIFICATION
+ * ============================
+ */
+app.post("/api/voters/register", (req, res) => {
+  const voters = readJSON("voters.json").voters;
+
+  const voter = {
+    ...req.body,
+    verified: false,
+    hasVotedFPTP: false,
+    hasVotedPR: false,
+    createdAt: new Date().toISOString(),
+  };
+
+  voters.push(voter);
+  writeJSON("voters.json", { voters });
+
+  res.status(201).json({ message: "Voter registered" });
+});
+
+app.post("/api/voters/:voterId/verify", (req, res) => {
+  const voters = readJSON("voters.json").voters;
+  const voter = voters.find((v) => v.voterId === req.params.voterId);
+
+  if (!voter) return res.status(404).json({ message: "Voter not found" });
+
+  voter.verified = true;
+  writeJSON("voters.json", { voters });
+
+  res.json({ message: "Voter verified" });
+});
+
+/**
+ * ============================
+ * VOTING CONTEXT
+ * ============================
+ */
+app.get("/api/vote/context", requireAuth, (req, res) => {
+  const u = req.session.user;
   res.json({
-    voterId: user.voterId,
-    name: user.name,
-    fatherName: user.fatherName,
-    dob: user.dob,
-    citizenshipNo: user.citizenshipNo,
-    phoneNo: user.phoneNo,
-    province: user.province,
-    district: user.district,
-    constituency: user.constituency,
-    pollingStation: user.pollingStation
+    verified: u.verified,
+    canVoteFPTP: u.verified && !u.hasVotedFPTP,
+    canVotePR: u.verified && !u.hasVotedPR,
   });
 });
 
-// Logout
-app.post('/logout', (req, res) => {
-  req.session.destroy(err => {
-    if (err) return res.status(500).json({ message: 'Logout failed' });
-    res.clearCookie('connect.sid'); // default session cookie name
-    res.json({ message: 'Logged out' });
+/**
+ * ============================
+ * CANDIDATES & PARTIES
+ * ============================
+ */
+app.get("/api/candidates", requireAuth, (req, res) => {
+  const candidates = readJSON("candidates.json").candidates;
+  res.json(
+    candidates.filter(
+      (c) => c.constituency === req.session.user.constituency
+    )
+  );
+});
+
+app.get("/api/candidates/:region", requireAuth, (req, res) => {
+  const candidates = readJSON("candidates.json").candidates;
+  res.json(candidates.filter((c) => c.constituency === req.params.region));
+});
+
+app.get("/api/parties", requireAuth, (req, res) => {
+  res.json(readJSON("parties.json").parties);
+});
+
+/**
+ * ============================
+ * VOTING
+ * ============================
+ */
+app.post("/api/vote/submit", requireAuth, requireVerified, (req, res) => {
+  const { voteType, candidateId, partyId } = req.body;
+
+  const votesData = readJSON("votes.json");
+  const voters = readJSON("voters.json").voters;
+
+  const voter = voters.find(
+    (v) => v.voterId === req.session.user.voterId
+  );
+
+  if (voteType === "FPTP" && voter.hasVotedFPTP)
+    return res.status(400).json({ message: "Already voted FPTP" });
+
+  if (voteType === "PR" && voter.hasVotedPR)
+    return res.status(400).json({ message: "Already voted PR" });
+
+  const voteEntry = {
+    voterId: voter.voterId,
+    voteType,
+    candidateId: candidateId || null,
+    partyId: partyId || null,
+    timestamp: new Date().toISOString(),
+  };
+
+  if (voteType === "FPTP") {
+    votesData.votes.fptp.push(voteEntry);
+    voter.hasVotedFPTP = true;
+  } else {
+    votesData.votes.pr.push(voteEntry);
+    voter.hasVotedPR = true;
+  }
+
+  writeJSON("votes.json", votesData);
+  writeJSON("voters.json", { voters });
+
+  req.session.user.hasVotedFPTP = voter.hasVotedFPTP;
+  req.session.user.hasVotedPR = voter.hasVotedPR;
+
+  res.json({ message: "Vote submitted" });
+});
+
+/**
+ * ============================
+ * RESULTS
+ * ============================
+ */
+app.get("/api/results/summary", requireAuth, (req, res) => {
+  const votesData = readJSON("votes.json");
+  const fptpCount = votesData.votes.fptp.length;
+  const prCount = votesData.votes.pr.length;
+  res.json({
+    totalVotes: fptpCount + prCount,
+    fptpVotes: fptpCount,
+    prVotes: prCount,
   });
+});
+
+/**
+ * ============================
+ * FALLBACK
+ * ============================
+ */
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`🚀 Backend running at http://localhost:${PORT}`);
 });

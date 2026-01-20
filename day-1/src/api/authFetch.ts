@@ -1,61 +1,53 @@
-const BASE_URL = 'http://localhost:5000'
+const BASE_URL = 'http://localhost:5000';
 
 // Login function
+export const login = async (voterId: string, password: string) => {
+  const res = await fetch(`${BASE_URL}/api/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include', // important for session
+    body: JSON.stringify({ voterId, password }),
+  });
 
-export const login = async(voterId: string, password: string)=>{
-    const res = await fetch(`${BASE_URL}/login`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify({voterId, password})
-    }) 
+  const data = await res.json();
 
-    if (!res.ok) {
-    let errorMessage = 'Login failed';
-    try {
-      const errorData = await res.json();
-      errorMessage = errorData.message || errorMessage;
-    } catch (e) {
-      // Fallback if the server didn't return JSON
-      if (res.status === 401) errorMessage = 'Invalid Voter ID or Password';
-    }
-    throw new Error(errorMessage);
+  if (!res.ok) {
+    throw new Error(data.message || 'Login failed');
   }
 
-    return res.json()
-}
+  return data; // { voterId, name }
+};
 
-export const getProfile = async()=>{
-    const res = await fetch(`${BASE_URL}/me`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-    })
+// Get logged-in user profile
+export const getProfile = async () => {
+  const res = await fetch(`${BASE_URL}/api/voter/profile`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  });
 
-    if(!res.ok){
-        throw new Error('Not logged in')
-    }
+  const data = await res.json();
 
-    return res.json()
-}
+  if (!res.ok) {
+    throw new Error(data.message || 'Not logged in');
+  }
 
-export const logout = async()=>{
-    const res = await fetch(`${BASE_URL}/logout`,{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-    })
+  return data;
+};
 
-    if(!res.ok){
-        throw new Error('Logout Failed')
-    }
+// Logout
+export const logout = async () => {
+  const res = await fetch(`${BASE_URL}/api/auth/logout`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+  });
 
-    return res.json()
-}
+  const data = await res.json();
 
+  if (!res.ok) {
+    throw new Error(data.message || 'Logout failed');
+  }
+
+  return data;
+};

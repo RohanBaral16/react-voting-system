@@ -4,6 +4,7 @@ import { useContext, useEffect, useState} from 'react'
 import Input from '../../components/ui/input'
 import { AuthContext } from '../../context/authContext'
 import { useNavigate, Link } from 'react-router-dom'
+import { IoEye, IoEyeOff } from 'react-icons/io5'
 
 type FormDataType = {
   voterId: string
@@ -16,6 +17,7 @@ export default function Login(){
     const {user, login, error:contextError} = useContext(AuthContext)
     const navigate = useNavigate()
     const [error, setError] = useState<string|null>(null)
+    const [showPassword, setShowPassword] = useState(false)
 
     const errorTextClass = "text-sm text-red-600"
 
@@ -24,6 +26,13 @@ export default function Login(){
             setError(contextError)
         }
     }, [contextError])
+
+    useEffect(()=>{
+        // Clear error when visiting login page
+        if(error != 'Not authenticated'){
+            setError(null)
+        }
+    }, [])
 
     const onSubmit = async(data: FormDataType): Promise<void> =>{
         // logic for login, and navigate to dashboard
@@ -77,17 +86,28 @@ export default function Login(){
 
                     <div className="space-y-1 flex flex-col">
                         <label htmlFor="password">New Password</label>
-                        <Input
-                        type="password"
-                        id="password"
-                        variant="long"
-                        placeholder="*********"
-                        {...register(
-                            'password',
-                            {
-                                required: 'Please enter your password'}
-                        )}
-                        />
+                        <div className="relative">
+                            <Input
+                            type={showPassword ? "text" : "password"}
+                            id="password"
+                            variant="long"
+                            placeholder="*********"
+                            className="pr-10"
+                            {...register(
+                                'password',
+                                {
+                                    required: 'Please enter your password'}
+                            )}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800"
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                            >
+                                {showPassword ? <IoEyeOff size={20} /> : <IoEye size={20} />}
+                            </button>
+                        </div>
                         {
                             errors.password &&
                             (

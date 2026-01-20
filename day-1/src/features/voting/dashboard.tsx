@@ -70,8 +70,8 @@ export default function Dashboard(){
                 to={item.to}
             >
                 <FeatureCard>
-                <Icon className='text-[80px]'/>
-                <p className="font-bold text-lg text-center mt-2 w-full text-wrap truncate">{item.label}</p>
+                <Icon className='text-[50px] sm:text-[80px]'/>
+                <p className="text-sm font-bold sm:text-lg text-center mt-2 w-full text-wrap truncate">{item.label}</p>
                 </FeatureCard>
         </Link>
         )
