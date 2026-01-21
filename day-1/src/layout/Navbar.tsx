@@ -73,8 +73,8 @@ export default function Navbar(){
 
 
     <header className="w-full border-b border-solid
-     border-slate-200 dark:border-slate-800 bg-white
-      dark:bg-slate-900 px-4 md:px-20 lg:px-40 py-3 
+      border-slate-800 
+      bg-slate-900 px-4 md:px-20 lg:px-40 py-3 
       sticky top-0 z-50"
       >
 
@@ -121,13 +121,27 @@ export default function Navbar(){
         <Link  
             className="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
             to='/manual'
-        >Voting Manual</Link>
+        >
+            Voting Manual
+        </Link>
+
+      
       </nav>
-      <div className="bg-slate-200 dark:bg-slate-700 aspect-square rounded-full size-10 flex items-center justify-center overflow-hidden border border-slate-300 dark:border-slate-600">
-        <span className="material-symbols-outlined text-slate-500 dark:text-slate-400">
-          person
-        </span>
+      {/* person and logout */}
+        <div className="flex gap-5 justify-end items-center">
+            {/* person */}
+            <div className="bg-slate-200 dark:bg-slate-700 aspect-square rounded-full size-10 flex items-center justify-center overflow-hidden border border-slate-300 dark:border-slate-600">
+                <span className="material-symbols-outlined text-slate-500 dark:text-slate-400">
+                person
+                </span>
+            </div>
+
+            {/* logout button */}
+
+            <Button onClick={async()=>{userLogOut()}} variant="secondary">Logout</Button>
+
       </div>
+     
     </div>
   </div>
 </header>

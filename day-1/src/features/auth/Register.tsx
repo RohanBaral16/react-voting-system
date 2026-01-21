@@ -8,6 +8,7 @@ import { useState, useContext } from "react"
 import { AuthContext } from "../../context/authContext"
 import { useNavigate } from "react-router-dom"
 import { registerUser } from "../../api/authFetch"
+import RegistrationProgressBar from "../../components/ui/RegistrationProgressBar"
 
 type FormDataType = {
     name: string, // keep this full name
@@ -84,8 +85,10 @@ export default function Register(){
   }
 
     return(
-            <div className="grow flex items-center justify-center 
-            bg-[#78CDD7] p-6">
+            <div className="flex flex-col items-center justify-center 
+            bg-[#FFFFFE] p-6 w-full max-w-200 space-y-6 mx-auto">
+
+                <RegistrationProgressBar />
                 <form 
                     onSubmit={handleSubmit(onSubmit)}
                     className="w-full max-w-125 lg:max-w-full bg-white
@@ -136,106 +139,7 @@ export default function Register(){
                                 )
                             }
                         </div>
-                        {/* <div className="space-y-1 flex flex-col">
-                            <label htmlFor="fatherName">Father's Name</label>
-                            <Input
-                            id="fatherName"
-                            variant="long"
-                            placeholder="Shyam Prasad Pariyar"
-                            {...register('fatherName', {required: 'Father Name field is required'})}
-                            />
-                            {
-                                errors.fatherName &&
-                                (
-                                    <p className={errorTextClass}>
-                                    {errors.fatherName.message}  
-                                    </p>
-                                )
-                            }
-                        </div> */}
-
-                        {/* <div className="space-y-1 flex flex-col">
-                            <label htmlFor="ctznNo">Citizenship Number</label>
-                            <Input
-                            id="ctznNo"
-                            variant="long"
-                            placeholder="46-03-74-XXXXX"
-                            {...register('citizenshipNo', {required: 'Citizenship No. field is required'})}
-                            />
-                            {
-                                errors.fatherName &&
-                                (
-                                    <p className={errorTextClass}>
-                                    {errors.fatherName.message}  
-                                    </p>
-                                )
-                            }
-                        </div> */}
-
-                        {/* <div className="flex w-full flex-row justify-between items-center gap-4">
-                            <div className="w-1/2 flex flex-col ">
-                                <label htmlFor="voterId">Voter ID</label>
-                                <Input 
-                                    placeholder="12345XXXX"
-                                    variant="long"
-                                    {...register('voterId', {required: 'VoterId is required'})}
-                                />
-                                {
-                                    errors.voterId &&
-                                    (
-                                        <p className={errorTextClass}>
-                                        {errors.voterId.message}  
-                                        </p>
-                                    )
-                                }
-                            </div>
-
-                            <div className="w-1/2 flex flex-col">
-                                <label htmlFor="dob">Date of Birth</label>
-                                <Input 
-                                    variant="long"
-                                    type="date"
-                                    {...register('dob', {
-                                        valueAsDate: true, 
-                                        required: 'Date of birth is required',
-                                        validate:(value)=>(isAdult(value))
-                                    })}
-                                />
-                                {
-                                    errors.dob &&
-                                    (
-                                        <p className={errorTextClass}>
-                                        {errors.dob.message}  
-                                        </p>
-                                    )
-                                }
-                            </div>
-                            
-                        </div> */}
-
-                        {/* <div className="space-y-1 flex flex-col">
-                            <label htmlFor="phoneNo">Phone Number</label>
-                            <Input
-                            id="phoneNo"
-                            variant="long"
-                            placeholder="98XXXXXXXXXX"
-                            {...register('phoneNo', 
-                                {required: 'Phone Number field is required',
-                                    minLength:{
-                                        value: 10,
-                                        message: 'Please enter valid number.'
-                                    }
-                                })}
-                            />
-                            {
-                                errors.phoneNo &&
-                                (
-                                    <p className={errorTextClass}>
-                                    {errors.phoneNo.message}
-                                    </p>
-                                )
-                            }
-                        </div> */}
+                        
 
 
                         <div className="flex flex-row justify-between w-full gap-3">
@@ -333,31 +237,7 @@ export default function Register(){
                                     }
                                 </div>
                             </div>
-                            {/* <div className="flex flex-col w-1/2">
-                                <label htmlFor="selectedStation">Polling Station</label>
-                                <div className={selectClass}>
-                                        <select
-                                            id="selectedStation"
-                                            {...register('pollingStation', {required: 'Polling station is required'})}
-                                        >
-                                            <option value=''>Select a Polling Station</option>
-                                            {
-                                            province && district && constituency &&
-                                            locationData[province][district][constituency].map((station)=>(
-                                                <option key={station} value={station}>{station}</option>
-                                            ))
-                                            }
-                                        </select>
-                                        {
-                                        errors.pollingStation &&
-                                        (
-                                            <p className={errorTextClass}>
-                                            {errors.pollingStation.message}
-                                            </p>
-                                        )
-                                    }
-                                </div>
-                            </div> */}
+                           
                         </div>    
                         <div className="hidden lg:block"></div>
 

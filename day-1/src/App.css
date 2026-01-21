@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+/* This is fine for global styles */
+@layer components {
+  a {
+    @apply transition-transform hover:scale-105;
+  }
+}
