@@ -7,7 +7,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { IoEye, IoEyeOff } from 'react-icons/io5'
 
 type FormDataType = {
-  voterId: string
+  email: string
   password: string
 }
 
@@ -38,7 +38,7 @@ export default function Login(){
         // logic for login, and navigate to dashboard
         try{
           console.log('form data:', data)
-          await login(data.voterId, data.password)
+          await login(data.email, data.password)
           reset()
         }catch(err: any){
           setError(err.message || 'Login Error. Please try again')
@@ -66,17 +66,17 @@ export default function Login(){
                     </h2>
 
                         <div className="space-y-1 flex flex-col ">
-                            <label htmlFor="voterId">Voter ID</label>
+                            <label htmlFor="email">Email</label>
                             <Input 
-                                placeholder="12345XXXX"
+                                placeholder="your-email@evoting.org.np"
                                 variant="long"
-                                {...register('voterId', {required: 'Please enter your Voter ID'})}
+                                {...register('email', {required: 'Please enter your Email'})}
                             />
                             {
-                                errors.voterId &&
+                                errors.email &&
                                 (
                                     <p className={errorTextClass}>
-                                    {errors.voterId.message}  
+                                    {errors.email.message}  
                                     </p>
                                 )
                             }

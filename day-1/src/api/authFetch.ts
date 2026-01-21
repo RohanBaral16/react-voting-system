@@ -1,53 +1,70 @@
-const BASE_URL = 'http://localhost:5000';
+import api from "./apiSetup";
 
-// Login function
-export const login = async (voterId: string, password: string) => {
-  const res = await fetch(`${BASE_URL}/api/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include', // important for session
-    body: JSON.stringify({ voterId, password }),
-  });
-
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw new Error(data.message || 'Login failed');
+// ---------------------- LOGIN ---------------------- refactored to axios
+export const login = async (email: string, password: string) => {
+  try {
+    console.log({ email: email, password: password })
+    const res = await api.post("api/voter/profile", { email: email, password: password });
+    return res.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || "Login failed");
   }
-
-  return data; // { voterId, name }
 };
 
-// Get logged-in user profile
+// ---------------------- GET PROFILE ---------------------- refactored to axios
 export const getProfile = async () => {
-  const res = await fetch(`${BASE_URL}/api/voter/profile`, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-  });
-
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw new Error(data.message || 'Not logged in');
+  try {
+    const res = await api.get("api/voter/profile");
+    return res.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || "Not logged in");
   }
-
-  return data;
 };
 
-// Logout
+// ---------------------- LOGOUT ----------------------
 export const logout = async () => {
-  const res = await fetch(`${BASE_URL}/api/auth/logout`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-  });
+  try {
+    sessionStorage.clear();
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || "Logout failed");
+  }
+};
 
-  const data = await res.json();
+// ---------------------- REGISTER ----------------------
+export const registerUser = async (userData: {
+  name: string;
+  email: string;
+  // dob: string;
+  // voterId: string;
+  // citizenshipNo: string;
+  // fatherName: string;
+  // phoneNo: string;
+  password: string;
+  province: string;
+  district: string;
+  constituency: string;
+}) => {
 
-  if (!res.ok) {
-    throw new Error(data.message || 'Logout failed');
+  const requestBody = {
+    name: userData.name,
+    email: userData.email,
+    // dob: ,
+    // voterId: ,
+    // citizenshipNo: ,
+    // fatherName: ,
+    // phoneNo: ,
+    password: userData.password,
+    province_id: userData.province,
+    district_id: userData.district,
+    electoral_area_id: userData.constituency,
+
   }
 
-  return data;
+  console.log('Request body', requestBody)
+  try {
+    const res = await api.post("api/voter/register", requestBody);
+    return res.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data || "Registration failed");
+  }
 };

@@ -7,19 +7,20 @@ import RegistrationStatus, { type StatusType } from "../../components/ui/Registr
 import { useState, useContext } from "react"
 import { AuthContext } from "../../context/authContext"
 import { useNavigate } from "react-router-dom"
+import { registerUser } from "../../api/authFetch"
 
 type FormDataType = {
-    name: string,
-    dob: string, 
-    voterId: number,
-    citizenshipNo: string,
-    fatherName: string,
-    phoneNo: number,
+    name: string, // keep this full name
+    // dob: string, 
+    // voterId: number,
+    // citizenshipNo: string,
+    // phoneNo: number, -- keep this otional
+    email:string,
     password: string,
     province: string;
     district: string;
     constituency: string;
-    pollingStation: string;
+    // pollingStation: string;
     repassword: string
 
 }
@@ -66,10 +67,20 @@ export default function Register(){
         return(<RegistrationStatus status={registrationStatus} setStatus={setRegistrationStatus}/>)
     }
 
-    const onSubmit = (data: FormDataType) => {
-    console.log('form data:', data)
-    setRegistrationStatus('successful')
-    reset()
+    const onSubmit = async(data: FormDataType) => {
+        // call registration function here
+        const {repassword, ...userData} = data
+        console.log('Registration data', userData)
+        try{
+             await registerUser(userData)
+             reset()
+             setRegistrationStatus('successful')
+        }catch(err){
+            console.log('Registration error', err)
+            setRegistrationStatus('failed')
+            
+        }
+   
   }
 
     return(
@@ -108,6 +119,24 @@ export default function Register(){
                             }
                         </div>
                         <div className="space-y-1 flex flex-col">
+                            <label htmlFor="email">Email</label>
+                            <Input
+                            id="email"
+                            type="email"
+                            variant="long"
+                            placeholder="ramprasadpariyar@example.com"
+                            {...register('email', {required: 'Email is required'})}
+                            />
+                            {
+                                errors.email &&
+                                (
+                                    <p className={errorTextClass}>
+                                    {errors.email.message}  
+                                    </p>
+                                )
+                            }
+                        </div>
+                        {/* <div className="space-y-1 flex flex-col">
                             <label htmlFor="fatherName">Father's Name</label>
                             <Input
                             id="fatherName"
@@ -123,9 +152,9 @@ export default function Register(){
                                     </p>
                                 )
                             }
-                        </div>
+                        </div> */}
 
-                        <div className="space-y-1 flex flex-col">
+                        {/* <div className="space-y-1 flex flex-col">
                             <label htmlFor="ctznNo">Citizenship Number</label>
                             <Input
                             id="ctznNo"
@@ -141,9 +170,9 @@ export default function Register(){
                                     </p>
                                 )
                             }
-                        </div>
+                        </div> */}
 
-                        <div className="flex w-full flex-row justify-between items-center gap-4">
+                        {/* <div className="flex w-full flex-row justify-between items-center gap-4">
                             <div className="w-1/2 flex flex-col ">
                                 <label htmlFor="voterId">Voter ID</label>
                                 <Input 
@@ -182,9 +211,9 @@ export default function Register(){
                                 }
                             </div>
                             
-                        </div>
+                        </div> */}
 
-                        <div className="space-y-1 flex flex-col">
+                        {/* <div className="space-y-1 flex flex-col">
                             <label htmlFor="phoneNo">Phone Number</label>
                             <Input
                             id="phoneNo"
@@ -206,7 +235,7 @@ export default function Register(){
                                     </p>
                                 )
                             }
-                        </div>
+                        </div> */}
 
 
                         <div className="flex flex-row justify-between w-full gap-3">
@@ -220,7 +249,7 @@ export default function Register(){
                                         setValue('province', e.target.value)
                                         setValue('district', '')
                                         setValue('constituency', '')
-                                        setValue('pollingStation', '')
+                                        // setValue('pollingStation', '')
                                         }}   
                                     >
                                         <option value=''>Select Province</option>
@@ -249,7 +278,7 @@ export default function Register(){
                                             onChange={(e)=>{
                                                 setValue('district', e.target.value)
                                                 setValue('constituency', '')
-                                                setValue('pollingStation', '')
+                                                // setValue('pollingStation', '')
                                             }}
                                         >
                                             <option value=''>Select a district</option>
@@ -284,7 +313,7 @@ export default function Register(){
                                         {...register('constituency', {required: 'Constituency is required'})}
                                         onChange={(e)=>{
                                         setValue('constituency', e.target.value)
-                                        setValue('pollingStation', '')
+                                        // setValue('pollingStation', '')
                                         }}   
                                     >
                                         <option value=''>Select Constituency</option>
@@ -304,7 +333,7 @@ export default function Register(){
                                     }
                                 </div>
                             </div>
-                            <div className="flex flex-col w-1/2">
+                            {/* <div className="flex flex-col w-1/2">
                                 <label htmlFor="selectedStation">Polling Station</label>
                                 <div className={selectClass}>
                                         <select
@@ -328,7 +357,7 @@ export default function Register(){
                                         )
                                     }
                                 </div>
-                            </div>
+                            </div> */}
                         </div>    
                         <div className="hidden lg:block"></div>
 
