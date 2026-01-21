@@ -12,16 +12,15 @@ import RegistrationProgressBar from "../../components/ui/RegistrationProgressBar
 
 type FormDataType = {
     name: string, // keep this full name
-    // dob: string, 
-    // voterId: number,
-    // citizenshipNo: string,
-    // phoneNo: number, -- keep this otional
+    dob: string, 
+    voterId: number,
+    citizenshipNo: string,
+    phoneNo: number, 
     email:string,
     password: string,
     province: string;
     district: string;
     constituency: string;
-    // pollingStation: string;
     repassword: string
 
 }
@@ -38,7 +37,6 @@ export default function Register(){
     const password = watch('password')
     const province = watch("province");
     const district = watch("district");
-    const constituency = watch("constituency");
     
     const selectClass = "space-y-1 w-full flex flex-col border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
     const errorTextClass = "text-sm text-red-600"

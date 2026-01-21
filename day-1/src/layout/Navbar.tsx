@@ -82,7 +82,7 @@ export default function Navbar(){
   justify-center sm:justify-between   flex-wrap sm:gap-20"
   >
     <div className="flex items-center gap-4 
-    text-[#0d131b] dark:text-white ">
+   text-white ">
       
       <div>
         <h2 className="text-sm md:text-lg font-bold leading-tight tracking-tight">
@@ -102,12 +102,12 @@ export default function Navbar(){
           Home
         </a> */}
         <Link  
-            className="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
+            className=" text-slate-300 text-sm font-medium hover:text-primary transition-colors"
             to='/dashboard'
         >Home</Link>
         
         <a
-          className="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
+          className="text-slate-300 text-sm font-medium hover:text-primary transition-colors"
           href="#"
         >
           FAQ
@@ -119,7 +119,7 @@ export default function Navbar(){
           Support
         </a> */}
         <Link  
-            className="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
+            className="text-slate-300 text-sm font-medium hover:text-primary transition-colors"
             to='/manual'
         >
             Voting Manual

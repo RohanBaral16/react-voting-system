@@ -7,6 +7,8 @@ import MainLayout from './layout/MainLayout'
 import Dashboard from './features/voting/Dashboard'
 import Booth from './features/voting/Booth'
 
+// delete this later
+import RegisterPrototype from './features/auth/RegistrationPrototype'
 
 import { BallotInfo, ElectionInfo, DemoBooth, CandidatesInfo, ElectionResults } from './features/publicInfo';
 
@@ -21,7 +23,7 @@ function App() {
           <Route index element={<Navigate to='/login' replace/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/forgotpassword' element={<ForgotPassword/>}/>
-          <Route path='/register' element={<Register/>}/>
+          <Route path='/register' element={<RegisterPrototype/>}/>
 
           <Route path='/dashboard' element={<ProtectedRoute><Dashboard/></ProtectedRoute>}/>
           <Route path="/dashboard/vote" element={<ProtectedRoute><Booth /></ProtectedRoute>} />
