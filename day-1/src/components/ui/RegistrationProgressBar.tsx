@@ -4,6 +4,7 @@ type RegistrationProgressBarProps = {
     personal: 'in-progress'|'pending'|'completed';
     location: 'in-progress'|'pending'|'completed';
     security: 'in-progress'|'pending'|'completed';
+    review: 'in-progress'|'pending'|'completed';
   };
 };
 
@@ -11,7 +12,8 @@ type RegistrationProgressBarProps = {
 export default function RegistrationProgressBar({ stepStatus = {
     personal: 'in-progress',
     location: 'pending',
-    security: 'pending'
+    security: 'pending',
+    review: 'pending'
 } }: RegistrationProgressBarProps) {
   // Logic-based variables
   const [progress, setProgress] = useState<number>(0); // Assuming this is calculated based on stepStatus
@@ -32,7 +34,7 @@ export default function RegistrationProgressBar({ stepStatus = {
       stepStatus.location === "completed" &&
       stepStatus.security === "completed"
     ) {
-      setProgress(90);
+      setProgress(99);
     } else {
       setProgress(0); // fallback if none match
     }
@@ -73,22 +75,66 @@ export default function RegistrationProgressBar({ stepStatus = {
         {/* Steps Indicators */}
         <div className="flex justify-between mt-1">
           {/* Personal Info - Completed */}
-          <div className={`${STYLES.stepWrapper} text-emerald-600 dark:text-emerald-500`}>
-            <span className={STYLES.icon}>check_circle</span> 
-            Personal Info
-          </div>
+        <div
+        className={`
+            ${STYLES.stepWrapper} 
+            ${stepStatus.personal === "completed" ? "text-emerald-600 dark:text-emerald-500" : ""}
+            ${stepStatus.personal === "in-progress" ? "text-blue-500" : ""}
+        `}
+        >
+        <span className={STYLES.icon}>
+            {stepStatus.personal === "completed" ? "check_circle" : "person"}
+        </span>
+        Personal Info
+        </div>
 
           {/* Location - Active */}
-          <div className={`${STYLES.stepWrapper} font-bold text-primary dark:text-slate-100`}>
-            <span className={STYLES.icon}>location_on</span> 
-            Location
-          </div>
+        <div
+        className={`
+            ${STYLES.stepWrapper} 
+            font-bold
+            ${stepStatus.location === "completed" ? "text-emerald-600 dark:text-emerald-500" : ""}
+            ${stepStatus.location === "in-progress" ? "text-blue-500" : ""}
+            ${stepStatus.location === "pending" ? "text-primary dark:text-slate-300" : ""}
+        `}
+        >
+        <span className={STYLES.icon}>
+            {stepStatus.location === "completed" ? "check_circle" : "location_on"}
+        </span>
+        Location
+        </div>
+
 
           {/* Security - Pending */}
-          <div className={`${STYLES.stepWrapper} text-slate-400`}>
-            <span className={STYLES.icon}>lock</span> 
+            <div
+            className={`
+                ${STYLES.stepWrapper} 
+                font-bold
+                ${stepStatus.security === "completed" ? "text-emerald-600 dark:text-emerald-500" : ""}
+                ${stepStatus.security === "in-progress" ? "text-blue-500" : ""}
+                ${stepStatus.security === "pending" ? "text-primary dark:text-slate-300" : ""}
+            `}
+            >
+            <span className={STYLES.icon}>
+                {stepStatus.location === "completed" ? "check_circle" : "lock"}
+            </span>
             Security
-          </div>
+            </div>
+
+                        <div
+            className={`
+                ${STYLES.stepWrapper} 
+                font-bold
+                ${stepStatus.review === "completed" ? "text-emerald-600 dark:text-emerald-500" : ""}
+                ${stepStatus.review === "in-progress" ? "text-blue-500" : ""}
+                ${stepStatus.review === "pending" ? "text-primary dark:text-slate-300" : ""}
+            `}
+            >
+            <span className={STYLES.icon}>
+                {stepStatus.location === "completed" ? "check_circle" : "rate_review"}
+            </span>
+            Review Details
+            </div>
         </div>
       </div>
     </div>
