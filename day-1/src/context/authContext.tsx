@@ -94,14 +94,15 @@ export  const AuthProvider = ({children}: {children: ReactNode})=>{
 
     return(
         <AuthContext.Provider value={{ user, login, logout, error, loading, setLoading }}>
-  <div className="relative">
-    {children}
-    {loading && (
-      <div className="absolute inset-0 flex items-center justify-centerz-50">
-        <FourSquare color="#afaeff" size="medium" text="loading" />
-      </div>
-    )}
-  </div>
+        <div className="relative">
+        {children}
+        {loading && (
+            /* Changed 'absolute' to 'fixed' and ensured 'inset-0' is used */
+            <div className="fixed inset-0 flex items-center justify-center z-50">
+            <FourSquare color="#afaeff" size="medium" text="loading" />
+            </div>
+        )}
+        </div>
 </AuthContext.Provider>
     )
 

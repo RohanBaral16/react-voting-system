@@ -81,7 +81,8 @@ export default function Navbar(){
   <div className="max-w-300 mx-auto flex items-center 
   justify-center sm:justify-between   flex-wrap sm:gap-20"
   >
-    <div className="flex items-center gap-4 
+    <Link to='/dashboard'>
+      <div className="flex items-center gap-4 
    text-white ">
       
       <div>
@@ -93,6 +94,7 @@ export default function Navbar(){
         </p>
       </div>
     </div>
+    </Link>
     <div className="flex flex-1 justify-center sm:justify-end gap-4 md:gap-8 items-center">
       <nav className="flex items-center gap-9">
         {/* <a
@@ -106,12 +108,10 @@ export default function Navbar(){
             to='/dashboard'
         >Home</Link>
         
-        <a
-          className="text-slate-300 text-sm font-medium hover:text-primary transition-colors"
-          href="#"
-        >
-          FAQ
-        </a>
+        <Link  
+            className=" text-slate-300 text-sm font-medium hover:text-primary transition-colors"
+            to='#'
+        >FAQ</Link>
         {/* <a
           className="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
           href="#"
@@ -120,7 +120,7 @@ export default function Navbar(){
         </a> */}
         <Link  
             className="text-slate-300 text-sm font-medium hover:text-primary transition-colors"
-            to='/manual'
+            to='#'
         >
             Voting Manual
         </Link>
@@ -128,7 +128,9 @@ export default function Navbar(){
       
       </nav>
       {/* person and logout */}
-        <div className="flex gap-5 justify-end items-center">
+        {user?
+        
+        (<div className="flex gap-5 justify-end items-center">
             {/* person */}
             <div className="bg-slate-200 dark:bg-slate-700 aspect-square rounded-full size-10 flex items-center justify-center overflow-hidden border border-slate-300 dark:border-slate-600">
                 <span className="material-symbols-outlined text-slate-500 dark:text-slate-400">
@@ -138,9 +140,10 @@ export default function Navbar(){
 
             {/* logout button */}
 
-            <Button onClick={async()=>{userLogOut()}} variant="secondary">Logout</Button>
+             <Button onClick={async()=>{userLogOut()}} variant="secondary">Logout</Button>
 
-      </div>
+      </div>)
+      : null}
      
     </div>
   </div>

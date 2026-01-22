@@ -5,7 +5,7 @@ import type { RegistrationFormDataType } from "../features/auth/RegistrationProt
 export const login = async (email: string, password: string) => {
   try {
     console.log({ email: email, password: password })
-    const res = await api.post("api/voter/profile/", { email: email, password: password });
+    const res = await api.post("api/voter/login/", { email: email, password: password });
     return res.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.message || "Login failed");

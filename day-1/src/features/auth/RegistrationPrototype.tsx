@@ -60,7 +60,7 @@ export default function RegisterPrototype(){
 
         if (formCurrentStatus === 'personal') {
             // Step 1 = personal info
-            isValid = await trigger(["name", "dob", "voterId", "citizenshipNo"]);
+            isValid = await trigger(["name", "dob", "voterId", "citizenshipNo", "phoneNo"]);
         } else if (formCurrentStatus === 'location') {
             // Step 2 = location info
             isValid = await trigger(["province", "district", "constituency", "localBody"]);
@@ -241,6 +241,11 @@ export default function RegisterPrototype(){
                                             placeholder="98XXXXXXXX"
                                             {...register('phoneNo', {
                                                 required: 'Phone number is required',
+                                                pattern:{
+                                                    value: /^9[678]\d{8}$/,
+                                                    message: "Please enter a valid phone no."
+                                                }
+
                                             })}
                                             className="w-full rounded-lg border border-slate-200
                                              dark:border-slate-700 bg-slate-50 dark:bg-slate-800 
@@ -265,10 +270,14 @@ export default function RegisterPrototype(){
                                         </label>
                                         <input
                                             id="email"
-                                            type="email"
+                                            type="text"
                                             placeholder="example@email.com"
                                             {...register('email', {
-                                                required: 'Email number is required',
+                                                required: 'Email address is required',
+                                                pattern: {
+                                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                                    message: "Invalid email address"
+                                                    }
                                             })}
                                             className="w-full rounded-lg border border-slate-200
                                              dark:border-slate-700 bg-slate-50 dark:bg-slate-800 h-14 px-4 
