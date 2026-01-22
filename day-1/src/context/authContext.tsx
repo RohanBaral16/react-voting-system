@@ -1,7 +1,8 @@
 import { createContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { login as apiLogin, logout as apiLogout, getProfile as apiGetProfile } from '../api/authFetch'
-import { FourSquare } from 'react-loading-indicators';
+import { FourSquare } from 'react-loading-indicators'
+import  { type Dispatch, type SetStateAction } from 'react';
 
 type UserType = { voterId: string; name: string } | null;
 
@@ -13,6 +14,7 @@ type AuthContextType = {
   loading: boolean|null;
   login: (voterId: string, password: string)=> Promise<void>;
   logout: () => Promise<void>;
+  setLoading: Dispatch<SetStateAction<boolean>>
 };
 
 export const AuthContext = createContext<AuthContextType>({
@@ -25,7 +27,8 @@ export const AuthContext = createContext<AuthContextType>({
     },
     logout: async () => {
         return Promise.resolve();
-    }
+    },
+    setLoading: () => {},
 });
 
 //provider
@@ -90,13 +93,16 @@ export  const AuthProvider = ({children}: {children: ReactNode})=>{
 
 
     return(
-        <AuthContext.Provider value={{user, login, logout, error, loading}}>
-            {!loading ? 
-            children : 
-            <div className="flex h-screen w-full items-center justify-center">
-                <FourSquare color="#afaeff" size="medium" text="loading" textColor="" />
-            </div>}
-        </AuthContext.Provider>
+        <AuthContext.Provider value={{ user, login, logout, error, loading, setLoading }}>
+  <div className="relative">
+    {children}
+    {loading && (
+      <div className="absolute inset-0 flex items-center justify-centerz-50">
+        <FourSquare color="#afaeff" size="medium" text="loading" />
+      </div>
+    )}
+  </div>
+</AuthContext.Provider>
     )
 
 }

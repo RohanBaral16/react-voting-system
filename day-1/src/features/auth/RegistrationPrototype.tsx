@@ -1,16 +1,17 @@
 
 import { useForm } from "react-hook-form"
 import Button from "../../components/ui/button"
-import Input from "../../components/ui/input"
 import { locationData } from "../../demoData"
 import RegistrationStatus, { type StatusType } from "../../components/ui/RegistrationStatus"
 import { useState, useContext } from "react"
 import { AuthContext } from "../../context/authContext"
 import { useNavigate } from "react-router-dom"
-import { registerUser } from "../../api/authFetch"
 import RegistrationProgressBar from "../../components/ui/RegistrationProgressBar"
+import { IoEye, IoEyeOff } from 'react-icons/io5'
+import { registerUser } from "../../api/authFetch"
 
-type FormDataType = {
+
+export type RegistrationFormDataType = {
     name: string, // required
     dob: string, // required
     voterId: number, // required
@@ -28,14 +29,15 @@ type FormDataType = {
 
 
 export default function RegisterPrototype(){
-    const {register, watch, handleSubmit, trigger,  setValue, reset, formState:{errors}} = useForm<FormDataType>()
+    const {register, watch, handleSubmit, trigger,  setValue, reset, formState:{errors}} = useForm<RegistrationFormDataType>()
 
-    const {user} = useContext(AuthContext)
+    const {user, setLoading} = useContext(AuthContext)
 
     const navigate = useNavigate()
 
     const [registrationStatus, setRegistrationStatus] = useState<StatusType>('processing')
     const[formCurrentStatus, setFormCurrentStatus] = useState<'personal'|'location'|'security'|'verification'|'review'|null>('personal')
+    const [showPassword, setShowPassword] = useState(false)
 
     // useed styles
     const errorTextClass = "text-sm text-red-600"
@@ -95,22 +97,26 @@ export default function RegisterPrototype(){
     }
 
     if(registrationStatus === 'successful' || registrationStatus === 'failed'){
-        return(<RegistrationStatus status={registrationStatus} setStatus={setRegistrationStatus}/>)
+        return(
+            <div className="flex flex-col items-center justify-center 
+             p-6 w-full max-w-200 space-y-6 mx-auto bg-slate-200 dark:bg-slate-800">
+                <RegistrationStatus status={registrationStatus} setStatus={setRegistrationStatus}/>
+            </div>
+        )
     }
 
-    const onSubmit = async(data: FormDataType) => {
+    const onSubmit = async(data: RegistrationFormDataType) => {
         // call registration function here
-        const {repassword, ...userData} = data
-        console.log('Registration data', userData)
-        // try{
-        //      await registerUser(userData)
-        //      reset()
-        //      setRegistrationStatus('successful')
-        // }catch(err){
-        //     console.log('Registration error', err)
-        //     setRegistrationStatus('failed')
-            
-        // }
+        try{
+             setLoading(true)
+             await registerUser(data)
+             setRegistrationStatus('successful')
+        }catch(err){
+            console.log('Registration error', err)
+            setRegistrationStatus('failed')
+        }finally{
+            setLoading(false)
+        }
    
   }
 
@@ -133,7 +139,9 @@ export default function RegisterPrototype(){
                 {/* this is the prototype form  */}
 
 
-                <form className="bg-white dark:bg-slate-900 rounded-xl shadow-md border
+                <form 
+                    onSubmit={handleSubmit(onSubmit)}
+                className="bg-white dark:bg-slate-900 rounded-xl shadow-md border
                  border-slate-200 dark:border-slate-800 overflow-hidden">
                 {/* Header Section */}
                 
@@ -574,28 +582,40 @@ export default function RegisterPrototype(){
                                         >
                                             Password
                                         </label>
-                                        <input
+                            <div className="relative">
+                                <input
                                             id="password"
-                                            type="password"
+                                            type={showPassword ? "text" : "password"}
                                             placeholder="Enter password"
                                             className="w-full rounded-lg text-slate-900 dark:text-white border
                                              border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 h-14 
                                              px-4 text-base focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 
                                              outline-none transition-all"{...register(
-                                'password',
-                                {
-                                    required: 'New Password field is required.',
-                                    minLength:{
-                                        value: 8,
-                                        message: 'Please type at least 8 characters',
-                                    },
-                                    pattern:{
-                                        value: /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
-                                        message: 'Password must contain atleast one uppercase, alphanumeric, and symbol.'
-                                    }
-                                }
-                            )}
+                                                     'password',
+                                                {
+                                                    required: 'New Password field is required.',
+                                                    minLength:{
+                                                        value: 8,
+                                                        message: 'Please type at least 8 characters',
+                                                    },
+                                                    pattern:{
+                                                        value: /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
+                                                        message: 'Password must contain atleast one uppercase, alphanumeric, and symbol.'
+                                                    }
+                                                }
+                                            )}
                             />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-gray-200"
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                            >
+                                {showPassword ? <IoEyeOff size={20} /> : <IoEye size={20} />}
+                            </button>
+                            
+                            </div>            
+
                             {
                                 errors.password &&
                                 (
@@ -614,24 +634,36 @@ export default function RegisterPrototype(){
                                         >
                                             Confirm Password
                                         </label>
-                                        <input
+                                        <div className="relative">
+                                             <input
                                             id="repassword"
-                                            type="password"
+                                            type={showPassword ? "text" : "password"}
                                             placeholder="Re-enter password"
                                             className="w-full rounded-lg text-slate-900 dark:text-white 
                                             border border-slate-200 dark:border-slate-700 bg-slate-50
-                                             dark:bg-slate-800 h-14 px-4 text-base focus:border-blue-500 focus:ring-2
-                                              focus:ring-blue-500/20 outline-none transition-all"{...register(
-                                'repassword',
-                                {
-                                    required: 'Please re-confirm the new password.',
-                                    validate:(value)=>{
-                                        return value === password || 'Passwords donot match'
-                                    }
-                                },
-                                
-                            )}
-                            />
+                                            dark:bg-slate-800 h-14 px-4 text-base focus:border-blue-500 focus:ring-2
+                                            focus:ring-blue-500/20 outline-none transition-all"{...register(
+                                            'repassword',
+                                            {
+                                                required: 'Please re-confirm the new password.',
+                                                validate:(value)=>{
+                                                    return value === password || 'Passwords donot match'
+                                                }
+                                            },
+                                            
+                                        )}
+                                        /> 
+
+                                        <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-gray-200"
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                            >
+                                {showPassword ? <IoEyeOff size={20} /> : <IoEye size={20} />}
+                            </button>
+                                        
+                                        </div>
                             {
                                 errors.repassword &&
                                 (
@@ -792,8 +824,7 @@ export default function RegisterPrototype(){
             </button>
 
             <button
-                type="button"
-                onClick={() => { /* Handle final submission logic here */ }}
+                type="submit"
                 className="w-full sm:w-auto px-10 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-all shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2"
             >
                 Confirm & Submit Registration

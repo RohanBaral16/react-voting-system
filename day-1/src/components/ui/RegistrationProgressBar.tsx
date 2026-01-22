@@ -19,16 +19,14 @@ export default function RegistrationProgressBar({ stepStatus = {
   const [progress, setProgress] = useState<number>(0); // Assuming this is calculated based on stepStatus
     
   useEffect(() => {
-    console.log('setting progress')
-    console.log(stepStatus.personal, stepStatus.location, stepStatus.security)
     if (stepStatus.personal === "completed" && stepStatus.location === "in-progress") {
-      setProgress(30);
+      setProgress(33);
     } else if (
       stepStatus.personal === "completed" &&
       stepStatus.location === "completed" &&
       stepStatus.security === "in-progress"
     ) {
-      setProgress(60);
+      setProgress(66);
     } else if (
       stepStatus.personal === "completed" &&
       stepStatus.location === "completed" &&

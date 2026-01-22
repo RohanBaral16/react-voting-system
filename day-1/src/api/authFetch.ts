@@ -1,10 +1,11 @@
 import api from "./apiSetup";
+import type { RegistrationFormDataType } from "../features/auth/RegistrationPrototype";
 
 // ---------------------- LOGIN ---------------------- refactored to axios
 export const login = async (email: string, password: string) => {
   try {
     console.log({ email: email, password: password })
-    const res = await api.post("api/voter/profile", { email: email, password: password });
+    const res = await api.post("api/voter/profile/", { email: email, password: password });
     return res.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.message || "Login failed");
@@ -14,7 +15,7 @@ export const login = async (email: string, password: string) => {
 // ---------------------- GET PROFILE ---------------------- refactored to axios
 export const getProfile = async () => {
   try {
-    const res = await api.get("api/voter/profile");
+    const res = await api.get("api/voter/profile/");
     return res.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.message || "Not logged in");
@@ -31,19 +32,7 @@ export const logout = async () => {
 };
 
 // ---------------------- REGISTER ----------------------
-export const registerUser = async (userData: {
-  name: string;
-  email: string;
-  // dob: string;
-  // voterId: string;
-  // citizenshipNo: string;
-  // fatherName: string;
-  // phoneNo: string;
-  password: string;
-  province: string;
-  district: string;
-  constituency: string;
-}) => {
+export const registerUser = async (userData:RegistrationFormDataType) => {
 
   const requestBody = {
     name: userData.name,
@@ -56,13 +45,13 @@ export const registerUser = async (userData: {
     password: userData.password,
     province_id: userData.province,
     district_id: userData.district,
-    electoral_area_id: userData.constituency,
+    electoral_area: userData.constituency,
 
   }
 
   console.log('Request body', requestBody)
   try {
-    const res = await api.post("api/voter/register", requestBody);
+    const res = await api.post("api/voter/register/", requestBody);
     return res.data;
   } catch (error: any) {
     throw new Error(error.response?.data || "Registration failed");
