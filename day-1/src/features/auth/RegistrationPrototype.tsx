@@ -88,7 +88,14 @@ export default function RegisterPrototype(){
             <div className="flex flex-col items-center justify-center 
             bg-inherit p-6 w-full max-w-200 space-y-6 mx-auto ">
 
-                <RegistrationProgressBar />
+                <RegistrationProgressBar
+                    stepStatus={{
+                        personal: 'completed',
+                        location: 'completed',
+                        security: 'completed',
+                    }}
+                    />
+
 
                 
 
