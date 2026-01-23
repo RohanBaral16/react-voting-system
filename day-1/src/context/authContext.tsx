@@ -4,7 +4,7 @@ import { login as apiLogin, logout as apiLogout, getProfile as apiGetProfile } f
 import { FourSquare } from 'react-loading-indicators'
 import  { type Dispatch, type SetStateAction } from 'react';
 
-type UserType = { voterId: string; name: string } | null;
+type UserType = { username: string,  province: {id:number, name:string}, district:{id: number, name: string}, electoral_area:{id:number, name:string}} | null;
 
 type ErrorType = string | null
 

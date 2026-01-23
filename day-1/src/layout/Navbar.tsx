@@ -10,8 +10,6 @@ export default function Navbar(){
     const {user, logout} = useContext(AuthContext)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const paragraphItemsClass = "flex justify-center gap-2 items-center"
-
     async function userLogOut(){
         try{
             await logout()
@@ -22,55 +20,7 @@ export default function Navbar(){
 
 
     return(
-        // <section className="bg-[#FFFFFA]">
-        //     <div 
-        //     className="w-full md:h-15 
-        //     flex flex-col 
-        //     justify-between 
-        //     items-center
-        //     text-center
-        //     bg-[#0D5C63]
-        //     sm:flex-row sm:mx-0
 
-        //     rounded-b-3xl px-10 py-2
-        //     ">
-        //         <div className="text-2xl font-bold text-[#FFFFFA] ">
-        //             <Link to='/dashboard'><h1 className="flex items-center gap-2 w-32.5"><FaVoteYea />E-Voting</h1></Link>
-        //         </div>
-
-
-        //         <div 
-        //         className="
-        //         flex  justify-center  mt-2
-        //         flex-row flex-wrap text-[#FFFFFA]
-        //         gap-4
-        //         items-center
-        //         sm:mt-0
-        //         "
-        //         >
-        //             {user===null &&(
-        //                 <>
-        //                     <Link to='/about'>About Us</Link>
-        //                     <Link to='/Contact'>Contact</Link>
-        //                     <Link to='/manual'>Voting Manual</Link>
-        //                 </>
-        //             )}
-        //             {
-        //                 user && 
-
-        //                 <>
-        //                     <p className={paragraphItemsClass}>Welcome, <span className="font-bold">{user?.name}</span></p>
-        //                     <p className={paragraphItemsClass}>Voter ID: <span className="font-bold">{user?.voterId}</span></p>
-        //                     <div className="flex justify-center gap-2 items-center">
-        //                         <p className={paragraphItemsClass}>Verfied <span><MdVerified className="text-green-500"/></span></p>
-        //                         <Button onClick={async()=>{userLogOut()}} variant="secondary">Logout</Button>
-        //                     </div>
-        //                 </>
-
-        //             }
-        //         </div>
-        //     </div>
-        // </section>
 
 
 <header className="w-full border-b border-solid border-slate-800 bg-slate-800 dark:bg-slate-900 px-4 md:px-5 lg:px-10 py-3 sticky top-0 z-50">
@@ -110,9 +60,12 @@ export default function Navbar(){
                             onClick={async () => { userLogOut() }}
                             className="p-2 flex justify-center items-center
                             border border-slate-100 dark:border-slate-800
-                             hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full
-                             text-slate-600 dark:text-slate-400 transition-colors
-                             gap-2"
+                            bg-zinc-100
+                            dark:bg-slate-900
+                             hover:bg-slate-400 dark:hover:bg-slate-800 rounded-full
+                             text-slate-700 dark:text-slate-400 transition-colors
+                             gap-2 
+                             "
                         >
                             <span className="material-symbols-outlined">
                                 logout
@@ -158,12 +111,12 @@ export default function Navbar(){
               </div>
                      <button
                             onClick={async () => { userLogOut() }}
-                            className="p-2 flex justify-center items-center
+                            className="px-3 py-2 flex justify-center items-center
                             border border-slate-100 dark:border-slate-800
-                            bg-slate-300
+                            bg-zinc-100
                             dark:bg-slate-900
                              hover:bg-slate-400 dark:hover:bg-slate-800 rounded-full
-                             text-slate-900 dark:text-slate-400 transition-colors
+                              text-slate-700 dark:text-slate-400 transition-colors
                              gap-2 
                              "
                         >

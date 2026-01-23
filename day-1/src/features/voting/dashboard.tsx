@@ -7,7 +7,7 @@ import { FaPeopleGroup } from "react-icons/fa6";
 import { Link } from "react-router-dom"
 import { FaChartPie, FaUserGear  } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
-
+import VoterInfo from "./VoterInfo"
 import type{ IconType } from "react-icons"
 
 interface DashboardItems {
@@ -82,12 +82,15 @@ export default function Dashboard(){
 
     return(
         // population feature cards
-        <div className="flex flex-wrap
-        w-full h-full p-5 pt-10 \
-        gap-10 border border-red-600 
-        justify-center items-start content-start
-        bg-[#FFFFFA]">
+        <main className="max-w-300 mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <VoterInfo/>
+            {/* <div className="flex flex-wrap
+                w-full h-full p-5 pt-10 \
+                gap-10 border border-red-600 
+                justify-center items-start content-start
+                bg-[#FFFFFA]">
             {dashboardItemsElements}
-        </div>
+            </div> */}
+        </main>
     ) 
 }
