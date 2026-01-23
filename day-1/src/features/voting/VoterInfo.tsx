@@ -27,11 +27,12 @@ export default function VoterInfo(){
 
         <div className="flex-1 text-center md:text-left">
             <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 mb-2">
+                {/* when backend is ready pull details here */}
                 <h1 className="text-3xl font-extrabold tracking-tight">
-                    Name Here
+                    Name Here 
                 </h1>
 
-                <span className="inline-flex px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase">
+                <span className="inline-flex px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase justify-center items-center">
                     General Voter
                 </span>
             </div>
@@ -54,7 +55,7 @@ export default function VoterInfo(){
                         location_on
                     </span>
                     <span className="text-sm font-medium">
-                        {`${user?.province.name} Province, ${user?.district.name} District, ${user?.electoral_area.name}`}
+                        {`${user?.province?.name} Province, ${user?.district?.name} District, ${user?.electoral_area?.name}`}
                     </span>
                 </div>
 

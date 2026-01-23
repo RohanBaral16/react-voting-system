@@ -44,8 +44,8 @@ export default function Navbar(){
       {/* hidden on mobile, flex on sm and up */}
       <div className="hidden md:flex justify-end gap-4 md:gap-8 items-center">
         <nav className="flex items-center gap-9">
-          <Link className="text-slate-300 text-sm font-medium hover:text-primary transition-colors" to='/dashboard'>Home</Link>
-          <Link className="text-slate-300 text-sm font-medium hover:text-primary transition-colors" to='#'>FAQ</Link>
+          <Link className="text-slate-300 text-sm font-medium hover:text-primary transition-colors" to={user?'/login':'/dashboard'}>{user?'Home': 'Login'}</Link>
+          <Link className="text-slate-300 text-sm font-medium hover:text-primary transition-colors" to={user?'#':'/register'}>{user?'FAQ': 'Register'}</Link>
           <Link className="text-slate-300 text-sm font-medium hover:text-primary transition-colors" to='#'>Voting Manual</Link>
         </nav>
 
@@ -110,7 +110,10 @@ export default function Navbar(){
                 <span className="text-slate-300 text-sm">Profile</span>
               </div>
                      <button
-                            onClick={async () => { userLogOut() }}
+                            onClick={async () => { 
+                              setIsMenuOpen(false)
+                              userLogOut()
+                            }}
                             className="px-3 py-2 flex justify-center items-center
                             border border-slate-100 dark:border-slate-800
                             bg-zinc-100

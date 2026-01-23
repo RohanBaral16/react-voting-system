@@ -25,10 +25,10 @@ function ToggleTheme() {
         transition-colors"
     >
       {/* {theme === 'dark' ? <LuSun className="text-yellow-400" /> : <LuMoon className="text-blue-500" />} */}
-        <div className=' bg-slate-200 rounded-full p-1.5 dark:bg-transparent shawdow-1xl dark:shadow-none'>
+        <div className=' bg-slate-200 rounded-l-full p-1.5 dark:bg-transparent shawdow-1xl dark:shadow-none'>
             <LuSun className="text-primary dark:text-white" />
         </div>
-        <div className=' rounded-full p-1.5 dark:bg-slate-700'>
+        <div className=' rounded-r-full p-1.5 dark:bg-slate-700'>
             <LuMoon className="text-primary dark:text-white" />
         </div>
     </button>

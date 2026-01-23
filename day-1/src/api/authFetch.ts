@@ -1,5 +1,5 @@
 import api from "./apiSetup";
-import type { RegistrationFormDataType } from "../features/auth/RegistrationPrototype";
+import type { RegistrationFormDataType } from "../features/auth/Register";
 
 // ---------------------- LOGIN ---------------------- refactored to axios
 export const login = async (email: string, password: string) => {
@@ -8,7 +8,7 @@ export const login = async (email: string, password: string) => {
     const res = await api.post("api/voter/login/", { email: email, password: password });
     return res.data;
   } catch (error: any) {
-    throw new Error(error.response?.data?.message || "Login failed");
+    throw new Error(error.response?.data?.error || "Login failed");
   }
 };
 
@@ -18,7 +18,7 @@ export const getProfile = async () => {
     const res = await api.get("api/voter/profile/");
     return res.data;
   } catch (error: any) {
-    throw new Error(error.response?.data?.message || "Not logged in");
+    throw new Error(error.response?.data?.error || "Not logged in");
   }
 };
 
@@ -27,7 +27,7 @@ export const logout = async () => {
   try {
     sessionStorage.clear();
   } catch (error: any) {
-    throw new Error(error.response?.data?.message || "Logout failed");
+    throw new Error(error.response?.data?.error || "Logout failed");
   }
 };
 

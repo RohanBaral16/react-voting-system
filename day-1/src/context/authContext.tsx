@@ -1,9 +1,9 @@
 import { createContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
-import { login as apiLogin, logout as apiLogout, getProfile as apiGetProfile } from '../api/authFetch'
+import { login as apiLogin, logout as apiLogout, getProfile as apiGetProfile, getProfile } from '../api/authFetch'
 import { FourSquare } from 'react-loading-indicators'
 import  { type Dispatch, type SetStateAction } from 'react';
-
+// todo: when backend is ready, define Usertype here
 type UserType = { username: string,  province: {id:number, name:string}, district:{id: number, name: string}, electoral_area:{id:number, name:string}} | null;
 
 type ErrorType = string | null
@@ -43,12 +43,11 @@ export  const AuthProvider = ({children}: {children: ReactNode})=>{
     const login = async (email: string, password: string)=>{
     try{
         setLoading(true)
-        const profile = await apiLogin(email, password)
-        console.log('login successful', profile)
+        await apiLogin(email, password)
+        const profile = await getProfile()
         setUser(profile)
         setError(null)
     }catch(err: any){
-        setUser(null)
         setError(err.message || 'Login failed')
         throw err
     }finally{
@@ -61,14 +60,15 @@ export  const AuthProvider = ({children}: {children: ReactNode})=>{
     useEffect(()=>{
         const getProfile = async()=>{
             try{
+                setLoading(true)
                 const profile = await apiGetProfile()
                 setUser(profile)
                 setError(null)
             }catch(err: any){
                 setUser(null)
-                setError(err.message || 'Failed to fetch User')
             }finally {
                 setLoading(false);
+                console.log("No active session found.")
             }
         }
         //calling getProfile function here

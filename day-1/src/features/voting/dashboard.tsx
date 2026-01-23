@@ -9,6 +9,7 @@ import { FaChartPie, FaUserGear  } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
 import VoterInfo from "./VoterInfo"
 import type{ IconType } from "react-icons"
+import VotingStatus from "./VotingStatus"
 
 interface DashboardItems {
   to: string,
@@ -79,11 +80,14 @@ export default function Dashboard(){
 
     
    
-
+    if(!user){
+        return null
+    }
     return(
         // population feature cards
         <main className="max-w-300 mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <VoterInfo/>
+            <VotingStatus/>
             {/* <div className="flex flex-wrap
                 w-full h-full p-5 pt-10 \
                 gap-10 border border-red-600 

@@ -13,26 +13,26 @@ type FormDataType = {
 
 export default function Login(){
     const {register, handleSubmit, reset, formState:{errors}} = useForm<FormDataType>()
-    const {user, login, error:contextError} = useContext(AuthContext)
+    const {login, error:contextError} = useContext(AuthContext)
     const navigate = useNavigate()
-    const [error, setError] = useState<string|null>(null)
+    const [localError, setLocalError] = useState<string|null>(null)
     const [showPassword, setShowPassword] = useState(false)
 
     const errorTextClass = "text-sm text-red-600"
 
-    useEffect(()=>{ if(contextError){ setError(contextError) } }, [contextError])
-    useEffect(()=>{ if(error != 'Not authenticated'){ setError(null) } }, [])
+    useEffect(()=>{ if(contextError){ setLocalError(contextError) } }, [contextError])
 
     const onSubmit = async(data: FormDataType): Promise<void> =>{
+        setLocalError(null)
         try{
           console.log('form data:', data)
           await login(data.email, data.password)
-          reset()
+          navigate('/dashboard', { replace: true });
         }catch(err: any){
-          setError(err.message || 'Login Error. Please try again')
+          setLocalError(err.message || 'Login Error. Please try again')
         }
     }
-    useEffect(()=>{ if(user){ navigate('/dashboard') } },[user, navigate])
+    
 
     return(
         <div className="flex flex-col items-center justify-center 
@@ -106,7 +106,7 @@ export default function Login(){
                 </div>
 
                 {/* Error Message */}
-                {error && <p className={errorTextClass}>{error}</p>}
+                {localError && <p className={errorTextClass}>{localError}</p>}
 
                 {/* Submit Button */}
                 <div className="flex justify-center">
