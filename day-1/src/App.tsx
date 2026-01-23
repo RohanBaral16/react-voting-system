@@ -1,4 +1,4 @@
-import './App.css'
+
 import {Routes, Route, Navigate} from 'react-router-dom'
 import Login from './features/auth/Login'
 import ForgotPassword from './features/auth/ForgotPassword'

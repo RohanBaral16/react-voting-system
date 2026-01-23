@@ -2,12 +2,13 @@ import { Link } from "react-router-dom"
 import { AuthContext } from "../context/authContext"
 import { useContext } from "react"
 import Button from "../components/ui/button"
-import { FaVoteYea } from "react-icons/fa";
-import { MdVerified } from "react-icons/md";
+import ToggleTheme from "../components/ui/ToogleTheme"
+import { useState } from "react"
 
 
 export default function Navbar(){
     const {user, logout} = useContext(AuthContext)
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const paragraphItemsClass = "flex justify-center gap-2 items-center"
 
@@ -72,80 +73,110 @@ export default function Navbar(){
         // </section>
 
 
-    <header className="w-full border-b border-solid
-      border-slate-800 
-      bg-slate-900 px-4 md:px-20 lg:px-40 py-3 
-      sticky top-0 z-50"
-      >
+<header className="w-full border-b border-solid border-slate-800 bg-slate-800 dark:bg-slate-900 px-4 md:px-5 lg:px-10 py-3 sticky top-0 z-50">
+  <div className="w-full mx-auto flex items-center justify-between group/container">
+    
+      {/* Logo - Always visible */}
+      <Link to='/dashboard'>
+        <div className="flex items-center gap-4 text-white mr-5">
+          <div>
+            <h2 className="text-sm md:text-lg font-bold leading-tight tracking-tight">
+              National Election Commission
+            </h2>
+            <p className="text-[10px] md:text-xs font-medium text-slate-500 uppercase tracking-widest">
+              Nepal Official Portal
+            </p>
+          </div>
+        </div>
+      </Link>
 
-  <div className="max-w-300 mx-auto flex items-center 
-  justify-center sm:justify-between   flex-wrap sm:gap-20"
-  >
-    <Link to='/dashboard'>
-      <div className="flex items-center gap-4 
-   text-white ">
-      
-      <div>
-        <h2 className="text-sm md:text-lg font-bold leading-tight tracking-tight">
-          National Election Commission
-        </h2>
-        <p className="text-[10px] md:text-xs font-medium text-slate-500 uppercase tracking-widest">
-          Nepal Official Portal
-        </p>
-      </div>
-    </div>
-    </Link>
-    <div className="flex flex-1 justify-center sm:justify-end gap-4 md:gap-8 items-center">
-      <nav className="flex items-center gap-9">
-        {/* <a
-          className="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
-          href="#"
-        >
-          Home
-        </a> */}
-        <Link  
-            className=" text-slate-300 text-sm font-medium hover:text-primary transition-colors"
-            to='/dashboard'
-        >Home</Link>
-        
-        <Link  
-            className=" text-slate-300 text-sm font-medium hover:text-primary transition-colors"
-            to='#'
-        >FAQ</Link>
-        {/* <a
-          className="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
-          href="#"
-        >
-          Support
-        </a> */}
-        <Link  
-            className="text-slate-300 text-sm font-medium hover:text-primary transition-colors"
-            to='#'
-        >
-            Voting Manual
-        </Link>
+      {/* --- DESKTOP NAVIGATION --- */}
+      {/* hidden on mobile, flex on sm and up */}
+      <div className="hidden md:flex justify-end gap-4 md:gap-8 items-center">
+        <nav className="flex items-center gap-9">
+          <Link className="text-slate-300 text-sm font-medium hover:text-primary transition-colors" to='/dashboard'>Home</Link>
+          <Link className="text-slate-300 text-sm font-medium hover:text-primary transition-colors" to='#'>FAQ</Link>
+          <Link className="text-slate-300 text-sm font-medium hover:text-primary transition-colors" to='#'>Voting Manual</Link>
+        </nav>
 
-      
-      </nav>
-      {/* person and logout */}
-        {user?
-        
-        (<div className="flex gap-5 justify-end items-center">
-            {/* person */}
-            <div className="bg-slate-200 dark:bg-slate-700 aspect-square rounded-full size-10 flex items-center justify-center overflow-hidden border border-slate-300 dark:border-slate-600">
-                <span className="material-symbols-outlined text-slate-500 dark:text-slate-400">
-                person
-                </span>
+        <div className="flex justify-center gap-2 items-center">
+          {user && (
+            <div className="flex gap-5 justify-end items-center">
+              <div className="bg-slate-200 dark:bg-slate-700 aspect-square rounded-full size-10 flex items-center justify-center overflow-hidden border border-slate-300 dark:border-slate-600">
+                <span className="material-symbols-outlined text-slate-500 dark:text-slate-400">person</span>
+              </div>
+             
+              <button
+                            onClick={async () => { userLogOut() }}
+                            className="p-2 flex justify-center items-center
+                            border border-slate-100 dark:border-slate-800
+                             hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full
+                             text-slate-600 dark:text-slate-400 transition-colors
+                             gap-2"
+                        >
+                            <span className="material-symbols-outlined">
+                                logout
+                            </span>
+                            <p>Logout</p>
+              </button>
             </div>
+          )}
+          <ToggleTheme />
+        </div>
+      </div>
 
-            {/* logout button */}
+      {/* --- MOBILE TOGGLE --- */}
+      {/* hidden on desktop, flex on small screens */}
+      <div className="flex md:hidden items-center gap-3">
+        <ToggleTheme />
+        <button 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="text-slate-300 p-1 flex items-center justify-center"
+        >
+          <span className="material-symbols-outlined text-3xl">
+            {isMenuOpen ? 'close' : 'menu'}
+          </span>
+        </button>
+      </div>
 
-             <Button onClick={async()=>{userLogOut()}} variant="secondary">Logout</Button>
+      {/* --- MOBILE OVERLAY MENU --- */}
+      {isMenuOpen && (
+        <div className="absolute top-full left-0 w-full bg-slate-800 dark:bg-slate-900 border-b border-slate-700 p-6 flex flex-col gap-6 md:hidden shadow-xl animate-in fade-in slide-in-from-top-2">
+          <nav className="flex flex-col gap-5">
+            <Link onClick={() => setIsMenuOpen(false)} className="text-slate-300 text-lg font-medium" to='/dashboard'>Home</Link>
+            <Link onClick={() => setIsMenuOpen(false)} className="text-slate-300 text-lg font-medium" to='#'>FAQ</Link>
+            <Link onClick={() => setIsMenuOpen(false)} className="text-slate-300 text-lg font-medium" to='#'>Voting Manual</Link>
+          </nav>
 
-      </div>)
-      : null}
-     
-    </div>
+          {user && (
+            <div className="flex flex-col gap-4 pt-4 border-t border-slate-700">
+              <div className="flex items-center gap-3">
+                <div className="bg-slate-700 aspect-square rounded-full size-10 flex items-center justify-center border border-slate-600">
+                  <span className="material-symbols-outlined text-slate-400">person</span>
+                </div>
+                <span className="text-slate-300 text-sm">Profile</span>
+              </div>
+                     <button
+                            onClick={async () => { userLogOut() }}
+                            className="p-2 flex justify-center items-center
+                            border border-slate-100 dark:border-slate-800
+                            bg-slate-300
+                            dark:bg-slate-900
+                             hover:bg-slate-400 dark:hover:bg-slate-800 rounded-full
+                             text-slate-900 dark:text-slate-400 transition-colors
+                             gap-2 
+                             "
+                        >
+                            <span className="material-symbols-outlined">
+                                logout
+                            </span>
+                            <p>Logout</p>
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
   </div>
 </header>
 

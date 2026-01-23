@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #136dec;
+  --color-background-light: #f6f7f8;
+  --color-background-dark: #101822;
+}
+
+/* This is the key for Tailwind v4 */
+@variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  /* 1. Force the color-scheme for icons/inputs */
+  html.dark {
+    color-scheme: dark;
+  }
+
+  
+
+  /* 2. REMOVE VITE DEFAULTS: 
+     If Vite's default CSS is setting a background on #root or body, 
+     this line will neutralize it so your MainLayout works. */
+  #root, body, html {
+    background-color: transparent !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  *, ::after, ::before {
+    /* Transitions colors, backgrounds, and borders smoothly */
+    @apply transition-colors duration-200 ease-in-out;
+  }
+}
