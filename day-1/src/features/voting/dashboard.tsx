@@ -10,6 +10,7 @@ import { FaInfoCircle } from "react-icons/fa";
 import VoterInfo from "./VoterInfo"
 import type{ IconType } from "react-icons"
 import VotingStatus from "./VotingStatus"
+import VoteDashboardCard from "./components/voteDashboardCard"
 
 interface DashboardItems {
   to: string,
@@ -88,6 +89,9 @@ export default function Dashboard(){
         <main className="max-w-300 mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <VoterInfo/>
             <VotingStatus/>
+            <div>
+                <VoteDashboardCard/>
+            </div>
             {/* <div className="flex flex-wrap
                 w-full h-full p-5 pt-10 \
                 gap-10 border border-red-600 

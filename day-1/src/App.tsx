@@ -1,41 +1,87 @@
+import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "./features/auth/Login";
+import ForgotPassword from "./features/auth/ForgotPassword";
+import MainLayout from "./layout/MainLayout";
+import Dashboard from "./features/voting/Dashboard";
+import Booth from "./features/voting/Booth";
+import Register from "./features/auth/Register";
+import PublicRoute from "./api/routes/PublicRoute";
 
-import {Routes, Route, Navigate} from 'react-router-dom'
-import Login from './features/auth/Login'
-import ForgotPassword from './features/auth/ForgotPassword'
-import MainLayout from './layout/MainLayout'
-import Dashboard from './features/voting/Dashboard'
-import Booth from './features/voting/Booth'
-import Register from './features/auth/Register'
-import PublicRoute from './api/routes/PublicRoute'
+import {
+  BallotInfo,
+  ElectionInfo,
+  DemoBooth,
+  CandidatesInfo,
+  ElectionResults,
+} from "./features/publicInfo";
 
-import { BallotInfo, ElectionInfo, DemoBooth, CandidatesInfo, ElectionResults } from './features/publicInfo';
-
-import ProtectedRoute from './api/routes/ProtectedRoute'
+import ProtectedRoute from "./api/routes/ProtectedRoute";
 function App() {
-
   return (
     <>
-
       <Routes>
-        <Route element={<MainLayout/>}>
-          <Route index element={<Navigate to='/login' replace/>}/>
-          <Route path='/login' element={<PublicRoute><Login/></PublicRoute>}/>
-          <Route path='/forgotpassword' element={<PublicRoute><ForgotPassword/></PublicRoute>}/>
-          <Route path='/register' element={<PublicRoute><Register/></PublicRoute>}/>
+        <Route element={<MainLayout />}>
+          <Route index element={<Navigate to="/login" replace />} />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/forgotpassword"
+            element={
+              <PublicRoute>
+                <ForgotPassword />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
+            }
+          />
 
-          <Route path='/dashboard' element={<ProtectedRoute><Dashboard/></ProtectedRoute>}/>
-          <Route path="/dashboard/vote" element={<ProtectedRoute><Booth /></ProtectedRoute>} />
-          <Route path="/dashboard/voter-info" element={<Booth/>} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/vote/fptp"
+            element={
+              <ProtectedRoute>
+                <FPTPBooth />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/vote/pr"
+            element={
+              <ProtectedRoute>
+                <PRBooth />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path='/candidates-info' element={<CandidatesInfo/>}/>
-          <Route path='/election-info' element={<ElectionInfo/>}/>
-          <Route path='/demo-booth' element={<DemoBooth/>}/>
-          <Route path='/ballot-info' element={<BallotInfo/>}/>
-          <Route path='/ballot-info' element={<BallotInfo/>}/>
+          <Route path="/candidates-info" element={<CandidatesInfo />} />
+          <Route path="/election-info" element={<ElectionInfo />} />
+          <Route path="/demo-booth-fptp" element={<DemoBooth />} />
+          <Route path="/demo-booth-pr" element={<DemoBooth />} />
+          <Route path="/ballot-info" element={<BallotInfo />} />
+          <Route path="/ballot-info" element={<BallotInfo />} />
         </Route>
       </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
