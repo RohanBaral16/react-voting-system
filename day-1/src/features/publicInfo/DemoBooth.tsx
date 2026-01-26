@@ -1,19 +1,25 @@
 import VotingProcessStatusCard from "../voting/components/VotingProcessStatusCard";
 import ElectionSymbol from "./ElectionSymbol";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import VotingStatusCard from "./VoteStatusCard";
 
 type VotingStates = "fptp" | "pr" | "review" | "successful" | "failed";
 
 export default function DemoBooth() {
   const [selectedCandidateId, setselectedCandidateId] = useState<number | null>(
-    1,
+    null,
   );
-  const [selectedPartyId, setSelectedPartyId] = useState<number | null>(1);
+
+  const [selectedPartyId, setSelectedPartyId] = useState<number | null>(null);
 
   const [searchString, setSearchString] = useState<string | null>(null);
 
   const [currentVotingState, setCurrentVotingState] =
-    useState<VotingStates>("review");
+    useState<VotingStates>("fptp");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentVotingState]);
 
   const candidates = [
     { id: 1, name: "Alice", symbol: "tree", party: "Nepali Congress" },
@@ -100,6 +106,12 @@ export default function DemoBooth() {
     { id: 19, name: "Rastriya Prajatantra Party (Khadka)", symbol: "moon" },
     { id: 20, name: "Nepal Democratic Party", symbol: "fish" },
   ];
+
+  // Pre-calculate to avoid multiple .find() calls in the JSX
+  const selectedCandidate = candidates.find(
+    (c) => c.id === selectedCandidateId,
+  );
+  const selectedParty = parties.find((p) => p.id === selectedPartyId);
 
   const pageHeadingFPTP = (
     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-2">
@@ -192,6 +204,22 @@ export default function DemoBooth() {
     setSearchString(inputText);
   };
 
+  const handleNext = () => {
+    if (currentVotingState === "fptp") {
+      setCurrentVotingState("pr");
+    } else if (currentVotingState === "pr") {
+      setCurrentVotingState("review");
+    } else {
+      setCurrentVotingState("fptp");
+    }
+  };
+
+  const submitVote = () => {
+    console.log(selectedCandidate);
+    console.log(selectedParty);
+    setCurrentVotingState("successful");
+  };
+
   const searchBar = (
     <div className="md:col-span-2">
       <label className="relative flex items-center w-full">
@@ -239,7 +267,7 @@ export default function DemoBooth() {
         className={`bg-white dark:bg-slate-800 
      rounded-2xl overflow-hidden shadow-2xl  
        hover:scale-102
-     w-70 h-90 cursor-pointer
+     w-60 h-80 cursor-pointer
      transition-all flex flex-col ${selectedCandidateId === cand.id ? "border border-green-600 hover:border-green-600/70" : "hover:border hover:border-primary/60"}`}
       >
         <div className="relative h-40 bg-slate-200 dark:bg-slate-700">
@@ -247,13 +275,13 @@ export default function DemoBooth() {
             className="absolute inset-0 bg-cover bg-center flex justify-center items-center"
             data-alt={`Portrait of candidate ${cand.name}`}
           >
-            <span className="material-symbols-outlined text-9xl!">
+            <span className="material-symbols-outlined text-5xl!">
               account_circle
             </span>
           </div>
           <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-900/90 p-2 rounded-lg shadow-md backdrop-blur-sm ">
             <div
-              className="size-12 text-5xl flex justify-center items-center overflow-hidden"
+              className="size-12 text-4xl flex justify-center items-center overflow-hidden"
               data-alt={`${cand.symbol} symbol of ${cand.party}`}
             >
               <ElectionSymbol symbol={cand.symbol} />
@@ -264,7 +292,7 @@ export default function DemoBooth() {
           <div
             className={`pl-3 mb-4 grow flex-1 border-l-4 ${selectedCandidateId === cand.id ? "border-green-600" : "border-primary"}`}
           >
-            <h3 className="text-2xl font-black mb-1">{cand.name}</h3>
+            <h3 className="text-xl font-black mb-1">{cand.name}</h3>
             <p className="text-primary font-bold text-sm tracking-wide uppercase">
               {cand.party}
             </p>
@@ -326,7 +354,7 @@ export default function DemoBooth() {
             className="w-full py-3 rounded-xl bg-primary text-white font-black text-lg
              hover:bg-primary/90 hover:scale-102 active:scale-[0.98] transition-all 
              shadow-md flex items-center justify-center gap-2"
-            // onClick={handleNext} // handle later
+            onClick={handleNext}
           >
             Proceed to PR ballot
             <span className="material-symbols-outlined">arrow_forward</span>
@@ -352,7 +380,7 @@ export default function DemoBooth() {
         className={`bg-white dark:bg-slate-800 
         rounded-2xl overflow-hidden shadow-2xl  
         hover:scale-102
-        w-70 h-90 cursor-pointer
+        w-60 h-80 cursor-pointer
         transition-all flex flex-col
         ${
           selectedPartyId === party.id
@@ -362,7 +390,7 @@ export default function DemoBooth() {
       >
         {/* Party Symbol / Emoji */}
         <div className="relative h-40 bg-slate-200 dark:bg-slate-700 flex justify-center items-center">
-          <div className="text-8xl">
+          <div className="text-5xl">
             <ElectionSymbol symbol={party.symbol} />
             {/* OR emoji directly: {party.emoji} */}
           </div>
@@ -377,10 +405,7 @@ export default function DemoBooth() {
                 : "border-primary"
             }`}
           >
-            <h3 className="text-2xl font-black mb-1">{party.name}</h3>
-            <p className="text-primary font-bold text-xs tracking-wide uppercase">
-              Proportional Representation
-            </p>
+            <h3 className="text-xl font-black mb-1">{party.name}</h3>
           </div>
 
           <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700">
@@ -442,6 +467,7 @@ export default function DemoBooth() {
             className="w-full py-3 rounded-xl bg-primary text-white font-black text-lg
           hover:bg-primary/90 hover:scale-102 active:scale-[0.98] transition-all 
           shadow-md flex items-center justify-center gap-2"
+            onClick={handleNext}
           >
             Proceed to Review
             <span className="material-symbols-outlined">arrow_forward</span>
@@ -449,12 +475,6 @@ export default function DemoBooth() {
         </div>
       );
     })();
-
-  // Pre-calculate to avoid multiple .find() calls in the JSX
-  const selectedCandidate = candidates.find(
-    (c) => c.id === selectedCandidateId,
-  );
-  const selectedParty = parties.find((p) => p.id === selectedPartyId);
 
   const reviewElements = (
     <div className="max-w-2xl mx-auto w-full space-y-8 p-1">
@@ -472,7 +492,7 @@ export default function DemoBooth() {
         {/* FPTP Card */}
         <section className="relative group">
           <span className="absolute -top-3 left-6 bg-blue-600 text-white text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full z-10 shadow-sm">
-            Federal Parliament (FPTP)
+            First-past-the-post (FPTP)
           </span>
           <div className="relative overflow-hidden bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-3xl p-6 transition-all hover:border-blue-500/50 shadow-xl shadow-slate-200/50 dark:shadow-none">
             <div className="flex items-center gap-6 border-l-4 border-primary pl-5">
@@ -539,11 +559,21 @@ export default function DemoBooth() {
 
       {/* Action Buttons */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-        <button className="order-2 md:order-1 py-4 px-8 rounded-2xl font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:scale-95 flex items-center justify-center gap-2">
+        <button
+          className="order-2 md:order-1 py-4 px-8 rounded-2xl font-bold text-slate-600
+         dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all 
+         active:scale-95 flex items-center justify-center gap-2"
+          onClick={handleNext}
+        >
           <span className="material-symbols-outlined text-xl">edit_note</span>
           Modify Selection
         </button>
-        <button className="order-1 md:order-2 py-4 px-8 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black text-lg shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3">
+        <button
+          className="order-1 md:order-2 py-4 px-8 rounded-2xl bg-blue-600
+         hover:bg-blue-700 text-white font-black text-lg shadow-lg shadow-blue-500/30 
+         transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3"
+          onClick={submitVote}
+        >
           Confirm & Submit
           <span className="material-symbols-outlined">send</span>
         </button>
@@ -587,6 +617,17 @@ export default function DemoBooth() {
           <div className="flex flex-col justify-center items-center w-full">
             {reviewElements}
           </div>
+        </>
+      )}
+
+      {currentVotingState === "successful" && (
+        <>
+          <VotingStatusCard status="successful" />
+        </>
+      )}
+      {currentVotingState === "failed" && (
+        <>
+          <VotingStatusCard status="failed" />
         </>
       )}
     </div>

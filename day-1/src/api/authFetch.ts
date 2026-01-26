@@ -4,8 +4,11 @@ import type { RegistrationFormDataType } from "../features/auth/Register";
 // ---------------------- LOGIN ---------------------- refactored to axios
 export const login = async (email: string, password: string) => {
   try {
-    console.log({ email: email, password: password })
-    const res = await api.post("api/voter/login/", { email: email, password: password });
+    console.log({ email: email, password: password });
+    const res = await api.post("api/voter/login/", {
+      email: email,
+      password: password,
+    });
     return res.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || "Login failed");
@@ -32,8 +35,7 @@ export const logout = async () => {
 };
 
 // ---------------------- REGISTER ----------------------
-export const registerUser = async (userData:RegistrationFormDataType) => {
-
+export const registerUser = async (userData: RegistrationFormDataType) => {
   const requestBody = {
     name: userData.name,
     email: userData.email,
@@ -46,14 +48,13 @@ export const registerUser = async (userData:RegistrationFormDataType) => {
     province_id: userData.province,
     district_id: userData.district,
     electoral_area: userData.constituency,
+  };
 
-  }
-
-  console.log('Request body', requestBody)
+  console.log("Request body", requestBody);
   try {
     const res = await api.post("api/voter/register/", requestBody);
     return res.data;
   } catch (error: any) {
-    throw new Error(error.response?.data || "Registration failed");
+    throw new Error(error.response?.data?.error || "Registration failed");
   }
 };
