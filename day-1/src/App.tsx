@@ -55,22 +55,8 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/vote/fptp"
-            element={
-              <ProtectedRoute>
-                <FPTPBooth />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/vote/pr"
-            element={
-              <ProtectedRoute>
-                <PRBooth />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/vote/fptp" element={<DemoBooth />} />
+          <Route path="/vote/pr" element={null} />
 
           <Route path="/candidates-info" element={<CandidatesInfo />} />
           <Route path="/election-info" element={<ElectionInfo />} />
