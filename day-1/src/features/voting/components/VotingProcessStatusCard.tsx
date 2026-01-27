@@ -1,10 +1,10 @@
-const linkBase = "text-slate-500  dark:text-slate-400";
+const linkBase = "text-slate-700  dark:text-slate-300";
 
 const separatorIcon = "material-symbols-outlined text-slate-400 text-lg";
 
 export default function VotingProcessStatusCard() {
   return (
-    <nav className="flex text-sm border-t border-slate-100 dark:border-slate-800">
+    <nav className="flex text-sm ">
       <ol className="inline-flex items-center space-x-1 md:space-x-3">
         {/* Home */}
         <li className="inline-flex items-center">

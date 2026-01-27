@@ -329,7 +329,7 @@ export default function DemoBooth() {
 
       return (
         <div
-          className="fixed bottom-8 right-8 w-80 bg-white
+          className="fixed bottom-8 z-20 right-8 w-80 bg-white
          dark:bg-slate-800 rounded-2xl shadow-2xl 
          border border-transparent p-6 flex flex-col gap-4 animate-slide-up"
         >
@@ -443,7 +443,7 @@ export default function DemoBooth() {
 
       return (
         <div
-          className="fixed bottom-8 right-8 w-80 bg-white
+          className="fixed bottom-8 z-20  right-8 w-80 bg-white
         dark:bg-slate-800 rounded-2xl shadow-2xl 
         border border-transparent p-6 flex flex-col gap-4 animate-slide-up"
         >
@@ -582,54 +582,56 @@ export default function DemoBooth() {
   );
 
   return (
-    <div
-      className="flex flex-col p-6 w-full max-w-7xl space-y-6 
-    mx-auto bg-background-light dark:bg-background-dark 
-     rounded-3xl  flex-1 "
-    >
-      <VotingProcessStatusCard />
+    <main className="bg-background-light/50 dark:bg-background-dark/50 flex-1">
+      <div
+        className="flex flex-col p-6 w-full max-w-7xl space-y-6 
+    mx-auto 
+        "
+      >
+        <VotingProcessStatusCard />
 
-      {currentVotingState === "fptp" && (
-        <>
-          {pageHeadingFPTP}
-          {instructionsAndSecurityBadgeFPTP}
-          {searchBar}
-          <div className="flex flex-col justify-center items-center w-full">
-            {candidateGrid}
-          </div>
-          {selectedCandidateId ? floatingNavigatorFPTP : null}
-        </>
-      )}
+        {currentVotingState === "fptp" && (
+          <>
+            {pageHeadingFPTP}
+            {instructionsAndSecurityBadgeFPTP}
+            {searchBar}
+            <div className="flex flex-col justify-center items-center w-full">
+              {candidateGrid}
+            </div>
+            {selectedCandidateId ? floatingNavigatorFPTP : null}
+          </>
+        )}
 
-      {currentVotingState === "pr" && (
-        <>
-          {pageHeadingPR}
-          {instructionsAndSecurityBadgePR}
-          {searchBar}
-          <div className="flex flex-col justify-center items-center w-full">
-            {partyGrid}
-          </div>
-          {selectedCandidateId ? floatingNavigatorPR : null}
-        </>
-      )}
-      {currentVotingState === "review" && (
-        <>
-          <div className="flex flex-col justify-center items-center w-full">
-            {reviewElements}
-          </div>
-        </>
-      )}
+        {currentVotingState === "pr" && (
+          <>
+            {pageHeadingPR}
+            {instructionsAndSecurityBadgePR}
+            {searchBar}
+            <div className="flex flex-col justify-center items-center w-full">
+              {partyGrid}
+            </div>
+            {selectedCandidateId ? floatingNavigatorPR : null}
+          </>
+        )}
+        {currentVotingState === "review" && (
+          <>
+            <div className="flex flex-col justify-center items-center w-full">
+              {reviewElements}
+            </div>
+          </>
+        )}
 
-      {currentVotingState === "successful" && (
-        <>
-          <VotingStatusCard status="successful" />
-        </>
-      )}
-      {currentVotingState === "failed" && (
-        <>
-          <VotingStatusCard status="failed" />
-        </>
-      )}
-    </div>
+        {currentVotingState === "successful" && (
+          <>
+            <VotingStatusCard status="successful" />
+          </>
+        )}
+        {currentVotingState === "failed" && (
+          <>
+            <VotingStatusCard status="failed" />
+          </>
+        )}
+      </div>
+    </main>
   );
 }

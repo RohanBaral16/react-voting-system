@@ -19,18 +19,20 @@ export default function Navbar() {
 
   return (
     <header
-      className="w-full border-b border-solid border-slate-800 bg-slate-800 dark:bg-slate-900 px-4 md:px-5 
+      className="w-full 
+      shadow-2xl backdrop-blur-3xl 
+      px-4 md:px-5 
 lg:px-10 py-3 sticky top-0 z-50"
     >
       <div className="w-full mx-auto flex items-center justify-between group/container">
         {/* Logo - Always visible */}
         <Link to="/dashboard">
-          <div className="flex items-center gap-4 text-white mr-5">
+          <div className="flex items-center gap-4  mr-5">
             <div>
-              <h2 className="text-sm md:text-lg font-bold leading-tight tracking-tight">
+              <h2 className="text-sm md:text-lg font-bold leading-tight text-slate-950 dark:text-slate-50 tracking-tight transition-colors">
                 National Election Commission
               </h2>
-              <p className="text-[10px] md:text-xs font-medium text-slate-500 uppercase tracking-widest">
+              <p className="text-[10px] md:text-xs font-medium text-slate-700 dark:text-slate-300 uppercase tracking-widest">
                 Nepal Official Portal
               </p>
             </div>
@@ -42,19 +44,19 @@ lg:px-10 py-3 sticky top-0 z-50"
         <div className="hidden md:flex justify-end gap-4 md:gap-8 items-center">
           <nav className="flex items-center gap-9">
             <Link
-              className="text-slate-300 text-sm font-medium hover:text-primary transition-colors"
+              className=" text-sm font-medium hover:text-primary transition-colors"
               to={user ? "/login" : "/dashboard"}
             >
               {user ? "Home" : "Login"}
             </Link>
             <Link
-              className="text-slate-300 text-sm font-medium hover:text-primary transition-colors"
+              className=" text-sm font-medium hover:text-primary transition-colors"
               to={user ? "#" : "/register"}
             >
               {user ? "FAQ" : "Register"}
             </Link>
             <Link
-              className="text-slate-300 text-sm font-medium hover:text-primary transition-colors"
+              className=" text-sm font-medium hover:text-primary transition-colors"
               to="#"
             >
               Voting Manual

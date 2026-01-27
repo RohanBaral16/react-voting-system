@@ -37,8 +37,6 @@ export default function Register() {
     formState: { errors },
   } = useForm<RegistrationFormDataType>();
 
-  const { user, setLoading } = useContext(AuthContext);
-
   const [registrationStatus, setRegistrationStatus] =
     useState<StatusType>("processing");
   const [formCurrentStatus, setFormCurrentStatus] = useState<
