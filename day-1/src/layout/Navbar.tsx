@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import { useContext } from "react";
-import Button from "../components/ui/button";
 import ToggleTheme from "../components/ui/ToogleTheme";
 import { useState } from "react";
 

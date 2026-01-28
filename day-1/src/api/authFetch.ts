@@ -48,7 +48,7 @@ export const registerUser = async (userData: RegistrationFormDataType) => {
     password: userData.password,
     province_name: userData.province,
     district_name: userData.district,
-    electoral_name: userData.constituency,
+    electoral_area_name: userData.constituency,
   };
 
   console.log("Request body", requestBody);

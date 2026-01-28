@@ -11,7 +11,6 @@ import {
   ElectionInfo,
   DemoBooth,
   CandidatesInfo,
-  ElectionResults,
 } from "./features/publicInfo";
 
 import ProtectedRoute from "./api/routes/ProtectedRoute";
@@ -46,14 +45,7 @@ function App() {
             }
           />
 
-          <Route
-            path="/demovote"
-            element={
-              <PublicRoute>
-                <DemoBooth />
-              </PublicRoute>
-            }
-          />
+          <Route path="/demovote" element={<DemoBooth />} />
 
           <Route
             path="/dashboard"

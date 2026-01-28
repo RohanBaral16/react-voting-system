@@ -397,7 +397,6 @@ export default function Booth() {
               onClick={() => setselectedCandidateId(null)}
               className="flex gap-2 justify-center items-center not-last-of-type:p-4 hover:text-primary"
             >
-              <p className="opacity-50 ">Deselect</p>
               <span className="material-symbols-outlined leading-none translate-y-px text-sm!">
                 close
               </span>
@@ -579,6 +578,16 @@ export default function Booth() {
         dark:bg-slate-800 rounded-2xl shadow-2xl 
         border border-transparent p-6 flex flex-col gap-4 animate-slide-up"
         >
+          <div className="absolute top-4 right-4 ">
+            <button
+              onClick={() => setSelectedPartyId(null)}
+              className="flex gap-2 justify-center items-center not-last-of-type:p-4 hover:text-primary"
+            >
+              <span className="material-symbols-outlined leading-none translate-y-px text-sm!">
+                close
+              </span>
+            </button>
+          </div>
           <div className="flex items-center gap-3">
             <div className="text-4xl">
               <ElectionSymbol symbol={party.symbol} />
