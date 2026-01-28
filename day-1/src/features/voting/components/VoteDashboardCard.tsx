@@ -18,13 +18,15 @@ export default function VoteDashboardCard({
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
       <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Link
-          to={hasVotedBoth ? "#" : "/vote/fptp"}
+          to={hasVotedBoth ? "#" : "/vote/"}
           className={`group relative overflow-hidden ${
             hasVotedBoth
               ? "bg-green-600 dark:bg-green-900 shadow-green-600/20"
               : "bg-primary dark:bg-blue-950 shadow-primary/20"
           } rounded-2xl p-8 flex flex-col justify-between h-[300px] shadow-lg ${
-            hasVotedBoth ? "cursor-default" : "cursor-pointer hover:translate-y-[-4px]"
+            hasVotedBoth
+              ? "cursor-default"
+              : "cursor-pointer hover:translate-y-[-4px]"
           } transition-all`}
         >
           <div className="absolute top-0 right-0 p-4 opacity-50 dark:opacity-15 group-hover:scale-110 transition-transform">

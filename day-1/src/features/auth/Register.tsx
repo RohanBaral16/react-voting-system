@@ -4,8 +4,7 @@ import { locationData } from "../../demoData";
 import RegistrationStatus, {
   type StatusType,
 } from "../../components/ui/RegistrationStatus";
-import { useState, useContext } from "react";
-import { AuthContext } from "../../context/authContext";
+import { useState, useEffect } from "react";
 import RegistrationProgressBar from "../../components/ui/RegistrationProgressBar";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import { registerUser } from "../../api/authFetch";
@@ -37,12 +36,18 @@ export default function Register() {
     formState: { errors },
   } = useForm<RegistrationFormDataType>();
 
-  const [registrationStatus, setRegistrationStatus] =
-    useState<StatusType>("processing");
+  const [registrationStatus, setRegistrationStatus] = useState<StatusType>({
+    state: "processing",
+    error: null,
+  });
   const [formCurrentStatus, setFormCurrentStatus] = useState<
     "personal" | "location" | "security" | "verification" | "review" | null
   >("personal");
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [formCurrentStatus]);
 
   // useed styles
   const errorTextClass = "text-sm text-red-600";
@@ -114,11 +119,14 @@ export default function Register() {
     return age >= 18 || "You must be at least 18 years old.";
   }
 
-  if (registrationStatus === "successful" || registrationStatus === "failed") {
+  if (
+    registrationStatus.state === "successful" ||
+    registrationStatus.state === "failed"
+  ) {
     return (
       <div
         className="flex flex-col items-center justify-center 
-             p-6 w-full max-w-200 space-y-6 mx-auto bg-slate-200 dark:bg-slate-800"
+             p-6 w-full max-w-200 space-y-6 mx-auto"
       >
         <RegistrationStatus
           status={registrationStatus}
@@ -134,10 +142,11 @@ export default function Register() {
       await registerUser(data);
       console.log("Registration successful");
       reset();
-      setRegistrationStatus("successful");
-    } catch (err) {
+      setRegistrationStatus({ state: "successful", error: null });
+    } catch (err: any) {
       console.log("Registration error", err);
-      setRegistrationStatus("failed");
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      setRegistrationStatus({ state: "failed", error: errorMessage });
     }
   };
 

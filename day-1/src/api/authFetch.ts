@@ -28,6 +28,7 @@ export const getProfile = async () => {
 // ---------------------- LOGOUT ----------------------
 export const logout = async () => {
   try {
+    await api.get("api/voter/logout/");
     sessionStorage.clear();
   } catch (error: any) {
     throw new Error(error.response?.data?.error || "Logout failed");
@@ -45,9 +46,9 @@ export const registerUser = async (userData: RegistrationFormDataType) => {
     // fatherName: ,
     // phoneNo: ,
     password: userData.password,
-    province_id: userData.province,
-    district_id: userData.district,
-    electoral_area: userData.constituency,
+    province_name: userData.province,
+    district_name: userData.district,
+    electoral_name: userData.constituency,
   };
 
   console.log("Request body", requestBody);

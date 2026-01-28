@@ -22,8 +22,8 @@ interface DashboardItems {
 export default function Dashboard() {
   const { user, loading } = useContext(AuthContext);
   const [hasVoted, setHasVoted] = useState<{ fptp: boolean; pr: boolean }>({
-    fptp: true,
-    pr: true,
+    fptp: false,
+    pr: false,
   });
 
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ export default function Dashboard() {
         console.log(err);
       }
     };
-    // getStatus();
+    getStatus();
   }, [user]);
 
   const cardLinkStyle =

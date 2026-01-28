@@ -32,7 +32,7 @@ lg:px-10 py-3 sticky top-0 z-50"
               <h2 className="text-sm md:text-lg font-bold leading-tight text-slate-950 dark:text-slate-50 tracking-tight transition-colors">
                 National Election Commission
               </h2>
-              <p className="text-[10px] md:text-xs font-medium text-slate-700 dark:text-slate-300 uppercase tracking-widest">
+              <p className="text-[10px] md:text-xs font-medium text-slate-700 dark: uppercase tracking-widest">
                 Nepal Official Portal
               </p>
             </div>
@@ -57,9 +57,9 @@ lg:px-10 py-3 sticky top-0 z-50"
             </Link>
             <Link
               className=" text-sm font-medium hover:text-primary transition-colors"
-              to="#"
+              to="/demovote"
             >
-              Voting Manual
+              Demo Booth
             </Link>
           </nav>
 
@@ -100,7 +100,7 @@ lg:px-10 py-3 sticky top-0 z-50"
           <ToggleTheme />
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-slate-300 p-1 flex items-center justify-center"
+            className=" p-1 flex items-center justify-center"
           >
             <span className="material-symbols-outlined text-3xl">
               {isMenuOpen ? "close" : "menu"}
@@ -110,41 +110,39 @@ lg:px-10 py-3 sticky top-0 z-50"
 
         {/* --- MOBILE OVERLAY MENU --- */}
         {isMenuOpen && (
-          <div className="absolute top-full left-0 w-full bg-slate-800 dark:bg-slate-900 border-b border-slate-700 p-6 flex flex-col gap-6 md:hidden shadow-xl animate-in fade-in slide-in-from-top-2">
+          <div
+            className="absolute top-full left-0 w-full
+           bg-zinc-200 dark:bg-slate-900 border-b border-slate-700 
+           p-6 flex flex-col gap-6 md:hidden shadow-xl animate-in fade-in slide-in-from-top-2
+           text-slate-800 dark:text-slate-200
+           "
+          >
             <nav className="flex flex-col gap-5">
               <Link
                 onClick={() => setIsMenuOpen(false)}
-                className="text-slate-300 text-lg font-medium"
+                className=" text-lg font-medium"
                 to="/dashboard"
               >
                 Home
               </Link>
               <Link
                 onClick={() => setIsMenuOpen(false)}
-                className="text-slate-300 text-lg font-medium"
+                className=" text-lg font-medium"
                 to="#"
               >
                 FAQ
               </Link>
               <Link
                 onClick={() => setIsMenuOpen(false)}
-                className="text-slate-300 text-lg font-medium"
-                to="#"
+                className=" text-lg font-medium"
+                to="/demovote"
               >
-                Voting Manual
+                Demo Booth
               </Link>
             </nav>
 
             {user && (
               <div className="flex flex-col gap-4 pt-4 border-t border-slate-700">
-                <div className="flex items-center gap-3">
-                  <div className="bg-slate-700 aspect-square rounded-full size-10 flex items-center justify-center border border-slate-600">
-                    <span className="material-symbols-outlined text-slate-400">
-                      person
-                    </span>
-                  </div>
-                  <span className="text-slate-300 text-sm">Profile</span>
-                </div>
                 <button
                   onClick={async () => {
                     setIsMenuOpen(false);

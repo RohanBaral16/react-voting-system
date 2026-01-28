@@ -6,7 +6,6 @@ import Dashboard from "./features/voting/Dashboard";
 import Booth from "./features/voting/Booth";
 import Register from "./features/auth/Register";
 import PublicRoute from "./api/routes/PublicRoute";
-
 import {
   BallotInfo,
   ElectionInfo,
@@ -48,6 +47,15 @@ function App() {
           />
 
           <Route
+            path="/demovote"
+            element={
+              <PublicRoute>
+                <DemoBooth />
+              </PublicRoute>
+            }
+          />
+
+          <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
@@ -55,8 +63,14 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/vote/fptp" element={<DemoBooth />} />
-          <Route path="/vote/pr" element={null} />
+          <Route
+            path="/vote/"
+            element={
+              <ProtectedRoute>
+                <Booth />
+              </ProtectedRoute>
+            }
+          />
 
           <Route path="/candidates-info" element={<CandidatesInfo />} />
           <Route path="/election-info" element={<ElectionInfo />} />

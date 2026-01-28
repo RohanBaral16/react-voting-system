@@ -260,140 +260,63 @@ export default function DemoBooth() {
     }
 
     return (
-      <div key={cand.id} className="hidden md:block">
-        {/* Desktop view: Large card */}
-        <div
-          role="button"
-          onClick={() => handleCandidateSelect(cand.id)}
-          className={`bg-white dark:bg-slate-800 
+      <div
+        key={cand.id}
+        role="button"
+        onClick={() => handleCandidateSelect(cand.id)}
+        className={`bg-white dark:bg-slate-800 
      rounded-2xl overflow-hidden shadow-2xl  
        hover:scale-102
      w-60 h-80 cursor-pointer
-     transition-all flex flex-col 
-     ${selectedCandidateId === cand.id ? "border border-green-600 hover:border-green-600/70" : "hover:border hover:border-primary/60"}`}
-        >
-          <div className="relative h-40 bg-slate-200 dark:bg-slate-700">
-            <div
-              className="absolute inset-0 bg-cover bg-center flex justify-center items-center"
-              data-alt={`Portrait of candidate ${cand.name}`}
-            >
-              <span className="material-symbols-outlined text-5xl!">
-                account_circle
-              </span>
-            </div>
-            <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-900/90 p-2 rounded-lg shadow-md backdrop-blur-sm ">
-              <div
-                className="size-12 text-4xl flex justify-center items-center overflow-hidden"
-                data-alt={`${cand.symbol} symbol of ${cand.party}`}
-              >
-                <ElectionSymbol symbol={cand.symbol} />
-              </div>
-            </div>
+     transition-all flex flex-col ${selectedCandidateId === cand.id ? "border border-green-600 hover:border-green-600/70" : "hover:border hover:border-primary/60"}`}
+      >
+        <div className="relative h-40 bg-slate-200 dark:bg-slate-700">
+          <div
+            className="absolute inset-0 bg-cover bg-center flex justify-center items-center"
+            data-alt={`Portrait of candidate ${cand.name}`}
+          >
+            <span className="material-symbols-outlined text-5xl!">
+              account_circle
+            </span>
           </div>
-          <div className="p-3 h flex-1 flex flex-col justify-between   ">
+          <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-900/90 p-2 rounded-lg shadow-md backdrop-blur-sm ">
             <div
-              className={`pl-3 mb-4 grow flex-1 border-l-4 ${selectedCandidateId === cand.id ? "border-green-600" : "border-primary"}`}
+              className="size-12 text-4xl flex justify-center items-center overflow-hidden"
+              data-alt={`${cand.symbol} symbol of ${cand.party}`}
             >
-              <h3 className="text-xl font-black mb-1">{cand.name}</h3>
-              <p className="text-primary font-bold text-sm tracking-wide uppercase">
-                {cand.party}
-              </p>
-            </div>
-            <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700 ">
-              <button
-                onClick={() => handleCandidateSelect(cand.id)}
-                className={`w-full py-4 rounded-xl 
-              ${selectedCandidateId === cand.id ? "bg-green-600 hover:bg-green-600/80" : "bg-primary hover:bg-primary/80"}
-           text-white font-black text-lg active:scale-[0.98] transition-all 
-           shadow-md flex items-center justify-center gap-2 cursor-pointer`}
-              >
-                {selectedCandidateId === cand.id
-                  ? "Selected"
-                  : "Select to Vote"}
-                <span className="material-symbols-outlined">check_circle</span>
-              </button>
+              <ElectionSymbol symbol={cand.symbol} />
             </div>
           </div>
         </div>
-      </div>
-    );
-  });
-
-  const dynamicDemoCandidateMobileList = candidates.map((cand) => {
-    if (searchString) {
-      const searchLower =
-        typeof searchString === "string" ? searchString.toLowerCase() : "";
-      if (
-        !cand.name.toLowerCase().includes(searchLower) &&
-        !cand.party.toLowerCase().includes(searchLower)
-      ) {
-        return null;
-      }
-    }
-
-    return (
-      <div key={cand.id} className="md:hidden">
-        {/* Mobile view: Compact row */}
-        <div
-          className={`bg-white dark:bg-slate-800 rounded-3xl h-25 full overflow-hidden  flex items-center px-3 
-           gap-3  mb-3 cursor-pointer transition-all ${
-             selectedCandidateId === cand.id
-               ? "border-2 border-green-600 bg-green-50 dark:bg-green-900/20"
-               : "border border-slate-200 dark:border-slate-700"
-           }`}
-          onClick={() => handleCandidateSelect(cand.id)}
-        >
-          {/* Account circle icon */}
-          <span className="material-symbols-outlined text-4xl! flex-shrink-0">
-            account_circle
-          </span>
-
-          {/* Name and Party info */}
+        <div className="p-3 h flex-1 flex flex-col justify-between   ">
           <div
-            className={`w-50 border-l-4 ${selectedCandidateId === cand.id ? "border-green-600" : "border-primary"}  pl-4`}
+            className={`pl-3 mb-4 grow flex-1 border-l-4 ${selectedCandidateId === cand.id ? "border-green-600" : "border-primary"}`}
           >
-            <h3 className="text-sm font-black truncate">{cand.name}</h3>
-            <p className="text-xs font-bold text-primary uppercase truncate">
+            <h3 className="text-xl font-black mb-1">{cand.name}</h3>
+            <p className="text-primary font-bold text-sm tracking-wide uppercase">
               {cand.party}
             </p>
           </div>
-
-          {/* Party symbol emoji */}
-          <div className="flex-shrink-0 text-lg">
-            <ElectionSymbol symbol={cand.symbol} />
+          <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700 ">
+            <button
+              onClick={() => handleCandidateSelect(cand.id)}
+              className={`w-full py-4 rounded-xl 
+              ${selectedCandidateId === cand.id ? "bg-green-600 hover:bg-green-600/80" : "bg-primary hover:bg-primary/80"}
+           text-white font-black text-lg active:scale-[0.98] transition-all 
+           shadow-md flex items-center justify-center gap-2 cursor-pointer`}
+            >
+              {selectedCandidateId === cand.id ? "Selected" : "Select to Vote"}
+              <span className="material-symbols-outlined">check_circle</span>
+            </button>
           </div>
-
-          {/* Selection button */}
-          <button
-            onClick={() => handleCandidateSelect(cand.id)}
-            className={`flex-shrink-0 aspect-square w-10 flex justify-center items-center rounded-full transition-all ${
-              selectedCandidateId === cand.id
-                ? "bg-green-600 text-white"
-                : "bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600"
-            }`}
-          >
-            <span className="material-symbols-outlined text-xl!">
-              {selectedCandidateId === cand.id ? "check_circle" : "circle"}
-            </span>
-          </button>
         </div>
       </div>
     );
   });
 
   const candidateGrid = (
-    <div>
-      {/* Desktop grid */}
-      <div
-        className="hidden md:flex flex-wrap justify-center items-center
-       content-center gap-10 py-6 w-full"
-      >
-        {dynamicDemoCandidateGrid}
-      </div>
-      {/* Mobile list */}
-      <div className="md:hidden px-4 py-6">
-        {dynamicDemoCandidateMobileList}
-      </div>
+    <div className="flex flex-wrap justify-center  items-center content-center gap-10 py-6 w-full ">
+      {dynamicDemoCandidateGrid}
     </div>
   );
 
@@ -410,17 +333,6 @@ export default function DemoBooth() {
          dark:bg-slate-800 rounded-2xl shadow-2xl 
          border border-transparent p-6 flex flex-col gap-4 animate-slide-up"
         >
-          <div className="absolute top-4 right-4 ">
-            <button
-              onClick={() => setselectedCandidateId(null)}
-              className="flex gap-2 justify-center items-center not-last-of-type:p-4 hover:text-primary"
-            >
-              <p className="opacity-50 ">Deselect</p>
-              <span className="material-symbols-outlined leading-none translate-y-px text-sm!">
-                close
-              </span>
-            </button>
-          </div>
           <div className="flex items-center gap-3">
             <div className="text-4xl">
               <ElectionSymbol symbol={cand.symbol} />
@@ -461,12 +373,11 @@ export default function DemoBooth() {
     }
 
     return (
-      <div key={party.id} className="hidden md:block">
-        {/* Desktop view: Large card */}
-        <div
-          role="button"
-          onClick={() => handlePartySelect(party.id)}
-          className={`bg-white dark:bg-slate-800 
+      <div
+        key={party.id}
+        role="button"
+        onClick={() => handlePartySelect(party.id)}
+        className={`bg-white dark:bg-slate-800 
         rounded-2xl overflow-hidden shadow-2xl  
         hover:scale-102
         w-60 h-80 cursor-pointer
@@ -476,31 +387,31 @@ export default function DemoBooth() {
             ? "border border-green-600 hover:border-green-600/70"
             : "hover:border hover:border-primary/60"
         }`}
-        >
-          {/* Party Symbol / Emoji */}
-          <div className="relative h-40 bg-slate-200 dark:bg-slate-700 flex justify-center items-center">
-            <div className="text-5xl">
-              <ElectionSymbol symbol={party.symbol} />
-              {/* OR emoji directly: {party.emoji} */}
-            </div>
+      >
+        {/* Party Symbol / Emoji */}
+        <div className="relative h-40 bg-slate-200 dark:bg-slate-700 flex justify-center items-center">
+          <div className="text-5xl">
+            <ElectionSymbol symbol={party.symbol} />
+            {/* OR emoji directly: {party.emoji} */}
+          </div>
+        </div>
+
+        <div className="p-3 flex-1 flex flex-col justify-between">
+          <div
+            className={`pl-3 mb-4 grow flex-1 border-l-4 
+            ${
+              selectedPartyId === party.id
+                ? "border-green-600"
+                : "border-primary"
+            }`}
+          >
+            <h3 className="text-xl font-black mb-1">{party.name}</h3>
           </div>
 
-          <div className="p-3 flex-1 flex flex-col justify-between">
-            <div
-              className={`pl-3 mb-4 grow flex-1 border-l-4 
-              ${
-                selectedPartyId === party.id
-                  ? "border-green-600"
-                  : "border-primary"
-              }`}
-            >
-              <h3 className="text-xl font-black mb-1">{party.name}</h3>
-            </div>
-
-            <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700">
-              <button
-                onClick={() => handlePartySelect(party.id)}
-                className={`w-full py-4 rounded-xl 
+          <div className="mt-auto pt-6 border-t border-slate-100 dark:border-slate-700">
+            <button
+              onClick={() => handlePartySelect(party.id)}
+              className={`w-full py-4 rounded-xl 
               ${
                 selectedPartyId === party.id
                   ? "bg-green-600 hover:bg-green-600/80"
@@ -508,79 +419,19 @@ export default function DemoBooth() {
               }
               text-white font-black text-lg active:scale-[0.98] transition-all 
               shadow-md flex items-center justify-center gap-2`}
-              >
-                {selectedPartyId === party.id ? "Selected" : "Select Party"}
-                <span className="material-symbols-outlined">check_circle</span>
-              </button>
-            </div>
+            >
+              {selectedPartyId === party.id ? "Selected" : "Select Party"}
+              <span className="material-symbols-outlined">check_circle</span>
+            </button>
           </div>
-        </div>
-      </div>
-    );
-  });
-
-  const dynamicDemoPartyMobileList = parties.map((party) => {
-    if (searchString) {
-      const searchLower =
-        typeof searchString === "string" ? searchString.toLowerCase() : "";
-      if (!party.name.toLowerCase().includes(searchLower)) {
-        return null;
-      }
-    }
-
-    return (
-      <div key={party.id} className="md:hidden">
-        {/* Mobile view: Compact row */}
-        <div
-          className={`bg-white dark:bg-slate-800 rounded-3xl h-25 full overflow-hidden  flex items-center px-3 
-           gap-3  mb-3 cursor-pointer transition-all ${
-             selectedPartyId === party.id
-               ? "border-2 border-green-600 bg-green-50 dark:bg-green-900/20"
-               : "border border-slate-200 dark:border-slate-700"
-           }`}
-          onClick={() => handlePartySelect(party.id)}
-        >
-          {/* Party symbol emoji */}
-          <div className="flex-shrink-0 text-4xl">
-            <ElectionSymbol symbol={party.symbol} />
-          </div>
-
-          {/* Party name info */}
-          <div
-            className={`w-50 border-l-4 ${selectedPartyId === party.id ? "border-green-600" : "border-primary"}  pl-4`}
-          >
-            <h3 className="text-sm font-black truncate">{party.name}</h3>
-            <p className="text-xs font-bold text-primary uppercase truncate">
-              Proportional Representation
-            </p>
-          </div>
-
-          {/* Selection button */}
-          <button
-            onClick={() => handlePartySelect(party.id)}
-            className={`flex-shrink-0 aspect-square w-10 flex justify-center items-center rounded-full transition-all ${
-              selectedPartyId === party.id
-                ? "bg-green-600 text-white"
-                : "bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600"
-            }`}
-          >
-            <span className="material-symbols-outlined text-xl!">
-              {selectedPartyId === party.id ? "check_circle" : "circle"}
-            </span>
-          </button>
         </div>
       </div>
     );
   });
 
   const partyGrid = (
-    <div>
-      {/* Desktop grid */}
-      <div className="hidden md:flex flex-wrap justify-center items-center content-center gap-10 py-6 w-full">
-        {dynamicDemoPartyGrid}
-      </div>
-      {/* Mobile list */}
-      <div className="md:hidden px-4 py-6">{dynamicDemoPartyMobileList}</div>
+    <div className="flex flex-wrap justify-center items-center content-center gap-10 py-6 w-full">
+      {dynamicDemoPartyGrid}
     </div>
   );
 
@@ -630,11 +481,10 @@ export default function DemoBooth() {
       {/* Header Section */}
       <div className="text-center space-y-2">
         <h2 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white">
-          Review Your Demo Ballot
+          Review Your Ballot
         </h2>
         <p className="text-slate-500 dark:text-slate-400 text-lg">
-          This is a demonstration of the voting system. Your selections below
-          show how the interface would look in a real election.
+          Double-check your selections. This action is irreversible.
         </p>
       </div>
 
@@ -702,9 +552,8 @@ export default function DemoBooth() {
           warning
         </span>
         <p className="text-sm text-amber-800 dark:text-amber-200 leading-relaxed">
-          This is a demonstration interface. In a real election, your vote would
-          be final and irreversible. Your identity remains anonymous throughout
-          the encrypted tallying process.
+          By clicking submit, you acknowledge that your choice is final. Your
+          identity remains anonymous throughout the encrypted tallying process.
         </p>
       </div>
 
@@ -733,21 +582,12 @@ export default function DemoBooth() {
   );
 
   return (
-    <main className="relative bg-background-light/50 dark:bg-background-dark/50 flex-1">
+    <main className="bg-background-light/50 dark:bg-background-dark/50 flex-1">
       <div
         className="flex flex-col p-6 w-full max-w-7xl space-y-6 
     mx-auto 
         "
       >
-        <div
-          className="fixed inset-0 flex items-center justify-center 
-            pointer-events-none select-none 
-            opacity-5 z-10"
-        >
-          <span className="text-9xl font-bold text-slate-500 dark:text-zinc-50">
-            DEMO VOTING
-          </span>
-        </div>
         <VotingProcessStatusCard />
 
         {currentVotingState === "fptp" && (
