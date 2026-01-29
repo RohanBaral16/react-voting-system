@@ -1,3 +1,4 @@
+import UpdatedTimeText from "./components/UpdatedTimeText";
 type VotingStatusProps = {
   hasVotedfptp: boolean;
   hasVotedpr: boolean;
@@ -13,8 +14,8 @@ export default function VotingStatus({
           <span className="material-symbols-outlined text-primary">ballot</span>
           Voting Status
         </h2>
-        <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">
-          Update: Just now
+        <span className="text-xs font-bold text-slate-500 uppercase tracking-widest flex justify-center gap-3 items-center">
+          Update: {<UpdatedTimeText />}
         </span>
       </div>
       {/*  */}
