@@ -109,9 +109,10 @@ export default function RegistrationProgressBar({
         `}
           >
             <span className={STYLES.icon}>
-              {stepStatus.personal === "completed" ? "check_circle" : "person"}
+              {stepStatus.personal === "completed" ? "check_circle" : null}
             </span>
-            Personal Info
+            <span className={STYLES.icon}>person</span>
+            <p className="hidden sm:block">Personal Info</p>
           </div>
 
           {/* Location - Active */}
@@ -125,11 +126,10 @@ export default function RegistrationProgressBar({
         `}
           >
             <span className={STYLES.icon}>
-              {stepStatus.location === "completed"
-                ? "check_circle"
-                : "location_on"}
+              {stepStatus.location === "completed" ? "check_circle" : null}
             </span>
-            Location
+            <span className={STYLES.icon}>location_on</span>
+            <p className="hidden sm:block">Location Info</p>
           </div>
 
           {/* Security - Pending */}
@@ -143,9 +143,10 @@ export default function RegistrationProgressBar({
             `}
           >
             <span className={STYLES.icon}>
-              {stepStatus.location === "completed" ? "check_circle" : "lock"}
+              {stepStatus.security === "completed" ? "check_circle" : null}
             </span>
-            Security
+            <span className={STYLES.icon}>lock</span>
+            <p className="hidden sm:block">Security</p>
           </div>
 
           <div
@@ -157,12 +158,8 @@ export default function RegistrationProgressBar({
                 ${stepStatus.review === "pending" ? "text-primary dark:text-slate-300" : ""}
             `}
           >
-            <span className={STYLES.icon}>
-              {stepStatus.location === "completed"
-                ? "check_circle"
-                : "rate_review"}
-            </span>
-            Review Details
+            <span className={STYLES.icon}>rate_review</span>
+            <p className="hidden sm:block">Review</p>
           </div>
         </div>
       </div>

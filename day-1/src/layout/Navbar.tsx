@@ -33,7 +33,7 @@ lg:px-10 py-3 sticky top-0 z-50"
               <h2 className="text-sm md:text-lg font-bold leading-tight text-slate-950 dark:text-slate-50 tracking-tight transition-colors">
                 National Election Commission
               </h2>
-              <p className="text-[10px] md:text-xs font-medium text-slate-700 dark: uppercase tracking-widest">
+              <p className="text-[10px] md:text-xs font-medium text-slate-700 dark:text-slate-50/70 uppercase tracking-widest">
                 Nepal Official Portal
               </p>
             </div>
