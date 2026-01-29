@@ -81,12 +81,6 @@ lg:px-10 py-3 sticky top-0 z-50"
           <div className="flex justify-center gap-2 items-center">
             {user && (
               <div className="flex gap-5 justify-end items-center">
-                <div className="bg-slate-200 dark:bg-slate-700 aspect-square rounded-full size-10 flex items-center justify-center overflow-hidden border border-slate-300 dark:border-slate-600">
-                  <span className="material-symbols-outlined text-slate-500 dark:text-slate-400">
-                    person
-                  </span>
-                </div>
-
                 <button
                   onClick={async () => {
                     userLogOut();

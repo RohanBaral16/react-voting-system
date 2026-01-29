@@ -8,6 +8,17 @@ import {
 import PartyResultCard from "../../components/ui/PartyResultCard";
 import CandidateResultCard from "../../components/ui/CandidateResultCard";
 import { locationData } from "../../demoData";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  LabelList,
+  Line,
+} from "recharts";
 
 export default function ElectionResults() {
   const [prResults, setPrResults] = useState<PartyResult[]>([]);
@@ -16,9 +27,10 @@ export default function ElectionResults() {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"pr" | "fptp">("pr");
   const [searchString, setSearchString] = useState<string | null>(null);
-  const [selectedProvince, setSelectedProvince] = useState<string>("");
-  const [selectedDistrict, setSelectedDistrict] = useState<string>("");
-  const [selectedConstituency, setSelectedConstituency] = useState<string>("");
+  const [selectedProvince, setSelectedProvince] = useState<string>("Bagmati");
+  const [selectedDistrict, setSelectedDistrict] = useState<string>("Kathmandu");
+  const [selectedConstituency, setSelectedConstituency] =
+    useState<string>("Kathmandu-1");
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -80,6 +92,7 @@ export default function ElectionResults() {
   });
 
   const filteredFptpResults = fptpResults.filter((result) => {
+    if (!selectedConstituency) return false;
     const matchesSearch = normalizedSearch
       ? (result.candidate__name || "")
           .toLowerCase()
@@ -93,6 +106,33 @@ export default function ElectionResults() {
 
     return matchesSearch && matchesConstituency;
   });
+
+  const prChartData = filteredPrResults.map((result) => ({
+    name: result.party__name,
+    votes: result.total_votes,
+  }));
+
+  const fptpChartData = filteredFptpResults.map((result) => ({
+    name: result.candidate__name || "NOTA/Invalid",
+    votes: result.total_votes,
+    area: result.electoral_area__name,
+  }));
+
+  const totalVotesForChart = prChartData.reduce((sum, r) => sum + r.votes, 0);
+
+  const prChartWithTurnout = prChartData
+    .map((item) => ({
+      ...item,
+      turnout: totalVotesForChart
+        ? Number(((item.votes / totalVotesForChart) * 100).toFixed(2))
+        : 0,
+    }))
+    .sort((a, b) => b.votes - a.votes);
+
+  const fptpChartSorted = [...fptpChartData].sort((a, b) => b.votes - a.votes);
+
+  const chartData = activeTab === "pr" ? prChartWithTurnout : fptpChartSorted;
+  const chartHeight = Math.max(320, chartData.length * 42);
 
   return (
     <div className="min-h-screen bg-gray-50/50 dark:bg-gray-900/50 py-8 px-4">
@@ -230,6 +270,113 @@ export default function ElectionResults() {
                     ))}
                 </select>
               </div>
+            </div>
+          )}
+        </div>
+
+        {/* Chart */}
+        <div className="mb-10 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-sm">
+          <div className="flex items-center justify-bcdetween mb-4">
+            <div>
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                {activeTab === "pr"
+                  ? "Votes by Party (PR)"
+                  : "Votes by Candidate (FPTP)"}
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {activeTab === "pr"
+                  ? "Overall party vote distribution"
+                  : "Candidate vote distribution"}
+              </p>
+            </div>
+          </div>
+
+          {activeTab === "fptp" && !selectedConstituency ? (
+            <div className="h-72 flex items-center justify-center text-center">
+              <p className="text-gray-500 dark:text-gray-400 text-sm">
+                Select an Electoral Area to view candidate results.
+              </p>
+            </div>
+          ) : (
+            <div style={{ height: chartHeight }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={chartData}
+                  margin={{ top: 10, right: 30, left: 20, bottom: 10 }}
+                  layout="vertical"
+                >
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="#e5e7eb"
+                    className="dark:opacity-30"
+                  />
+                  <XAxis
+                    type="number"
+                    tick={{ fill: "#64748b", fontSize: 12 }}
+                    axisLine={{ stroke: "#e2e8f0" }}
+                    tickLine={{ stroke: "#e2e8f0" }}
+                    allowDecimals={false}
+                  />
+                  <YAxis
+                    type="category"
+                    dataKey="name"
+                    width={160}
+                    tick={{ fill: "#64748b", fontSize: 12 }}
+                    axisLine={{ stroke: "#e2e8f0" }}
+                    tickLine={{ stroke: "#e2e8f0" }}
+                  />
+                  {activeTab === "pr" && (
+                    <YAxis
+                      yAxisId="right"
+                      orientation="right"
+                      type="number"
+                      domain={[0, 100]}
+                      tickFormatter={(value) => `${value}%`}
+                      tick={{ fill: "#64748b", fontSize: 12 }}
+                      axisLine={{ stroke: "#e2e8f0" }}
+                      tickLine={{ stroke: "#e2e8f0" }}
+                    />
+                  )}
+                  <Tooltip
+                    contentStyle={{
+                      background: "#0f172a",
+                      border: "none",
+                      borderRadius: "12px",
+                      color: "#fff",
+                      fontSize: "12px",
+                    }}
+                    labelStyle={{ color: "#e2e8f0", fontWeight: 600 }}
+                    cursor={{ fill: "rgba(59, 130, 246, 0.1)" }}
+                    formatter={(value: number, name: string | undefined) =>
+                      name === "turnout" && activeTab === "pr"
+                        ? [`${value}%`, "Turnout"]
+                        : [value, "Votes"]
+                    }
+                    labelFormatter={(label, payload) => {
+                      const area = payload?.[0]?.payload?.area;
+                      return area ? `${label} • ${area}` : label;
+                    }}
+                  />
+                  <Bar
+                    dataKey="votes"
+                    fill="#2563eb"
+                    radius={[0, 6, 6, 0]}
+                    barSize={24}
+                  />
+                  {activeTab === "pr" && (
+                    <Line
+                      yAxisId="right"
+                      type="monotone"
+                      dataKey="turnout"
+                      stroke="#f97316"
+                      strokeWidth={2}
+                      dot={{ r: 3, strokeWidth: 2, fill: "#f97316" }}
+                      activeDot={{ r: 5 }}
+                    />
+                  )}
+                  <LabelList dataKey="votes" position="right" fill="#0f172a" />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           )}
         </div>
