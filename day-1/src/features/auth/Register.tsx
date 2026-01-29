@@ -599,6 +599,7 @@ export default function Register() {
                     your permanent address. If the suggested area is incorrect,
                     please verify your address details against your citizenship
                     document.
+                    <br />* indicates a required field
                   </p>
                 </div>
               </div>
