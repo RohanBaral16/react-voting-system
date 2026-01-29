@@ -7,12 +7,8 @@ type VoteDashboardCardProps = {
   hasVotedpr: boolean;
 };
 
-export default function BallotInfoDashBoardCard({
-  hasVotedfptp,
-  hasVotedpr,
-}: VoteDashboardCardProps) {
+export default function BallotInfoDashBoardCard({}: VoteDashboardCardProps) {
   const { user } = useContext(AuthContext);
-  const hasVotedBoth = hasVotedfptp && hasVotedpr;
 
   return (
     <div>

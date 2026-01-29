@@ -27,7 +27,7 @@ lg:px-10 py-3 sticky top-0 z-50"
     >
       <div className="w-full mx-auto flex items-center justify-between group/container">
         {/* Logo - Always visible */}
-        <Link to="/dashboard">
+        <Link to="/">
           <div className="flex items-center gap-4  mr-5">
             <div>
               <h2 className="text-sm md:text-lg font-bold leading-tight text-slate-950 dark:text-slate-50 tracking-tight transition-colors">
@@ -46,10 +46,11 @@ lg:px-10 py-3 sticky top-0 z-50"
           <nav className="flex items-center gap-9">
             <Link
               className=" text-sm font-medium hover:text-primary transition-colors"
-              to={user ? "/login" : "/dashboard"}
+              to={user ? "/dashboard" : "/login"}
             >
               {user ? "Dashboard" : "Login"}
             </Link>
+
             <Link
               className=" text-sm font-medium hover:text-primary transition-colors"
               to={user ? "/faq" : "/register"}
@@ -61,6 +62,12 @@ lg:px-10 py-3 sticky top-0 z-50"
               to="/demovote"
             >
               Demo Booth
+            </Link>
+            <Link
+              className=" text-sm font-medium hover:text-primary transition-colors"
+              to="/results"
+            >
+              Results
             </Link>
             <Link
               className=" text-sm font-medium hover:text-primary transition-colors"
@@ -130,9 +137,16 @@ lg:px-10 py-3 sticky top-0 z-50"
               <Link
                 onClick={() => setIsMenuOpen(false)}
                 className=" text-lg font-medium"
-                to="/dashboard"
+                to={user ? "/dashboard" : "/login"}
               >
                 {user ? "Dashboard" : "Login"}
+              </Link>
+              <Link
+                onClick={() => setIsMenuOpen(false)}
+                className=" text-lg font-medium"
+                to="/results"
+              >
+                Results
               </Link>
               <Link
                 onClick={() => setIsMenuOpen(false)}

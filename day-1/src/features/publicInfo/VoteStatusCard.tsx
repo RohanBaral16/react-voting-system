@@ -35,7 +35,7 @@ export default function VotingStatusCard({ status }: RegistrationStatusProps) {
         {/* Navigation buttons */}
         <div className="flex gap-4 justify-between">
           <Link
-            to="/dashboard"
+            to="/"
             className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium text-white transition-colors"
           >
             Go to Dashboard

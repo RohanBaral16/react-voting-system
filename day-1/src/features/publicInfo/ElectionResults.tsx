@@ -347,10 +347,10 @@ export default function ElectionResults() {
                     }}
                     labelStyle={{ color: "#e2e8f0", fontWeight: 600 }}
                     cursor={{ fill: "rgba(59, 130, 246, 0.1)" }}
-                    formatter={(value: number, name: string | undefined) =>
+                    formatter={(value: number | undefined, name?: string) =>
                       name === "turnout" && activeTab === "pr"
-                        ? [`${value}%`, "Turnout"]
-                        : [value, "Votes"]
+                        ? [`${value ?? 0}%`, "Turnout"]
+                        : [value ?? 0, "Votes"]
                     }
                     labelFormatter={(label, payload) => {
                       const area = payload?.[0]?.payload?.area;

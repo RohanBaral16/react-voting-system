@@ -14,9 +14,8 @@ import {
   DemoBooth,
   CandidatesInfo,
   ElectionResults,
+  Home,
 } from "./features/publicInfo";
-import PartyResultCard from "./components/ui/PartyResultCard";
-import CandidateResultCard from "./components/ui/CandidateResultCard";
 
 import ProtectedRoute from "./api/routes/ProtectedRoute";
 function App() {
@@ -24,7 +23,7 @@ function App() {
     <>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route index element={<Navigate to="/login" replace />} />
+          <Route index element={<Home />} />
           <Route
             path="/login"
             element={

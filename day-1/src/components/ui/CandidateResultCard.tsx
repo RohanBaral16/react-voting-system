@@ -8,7 +8,6 @@ interface CandidateResultCardProps {
 
 export default function CandidateResultCard({
   result,
-  rank,
   totalVotes,
 }: CandidateResultCardProps) {
   const percentage =
