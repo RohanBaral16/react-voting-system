@@ -222,9 +222,10 @@ export default function Register() {
                 <div className="flex flex-col gap-2 md:col-span-2">
                   <label
                     htmlFor="name"
-                    className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                    className="text-slate-700 dark:text-slate-300 text-sm font-semibold flex gap-2"
                   >
-                    *Full Name
+                    <p>Full Name</p>
+                    <span className="text-red-700">*</span>
                   </label>
                   <input
                     id="name"
@@ -254,9 +255,10 @@ export default function Register() {
                   <label
                     htmlFor="dob"
                     className="text-slate-700 dark:text-slate-300 
-                                        text-sm font-semibold"
+                                        text-sm font-semibold flex gap-2"
                   >
-                    *Date of Birth
+                    Date of Birth
+                    <span className="text-red-700">*</span>
                   </label>
                   <input
                     id="dob"
@@ -285,9 +287,10 @@ export default function Register() {
                   <label
                     htmlFor="phoneNo"
                     className="text-slate-700
-                                         dark:text-slate-300 text-sm font-semibold"
+                                         dark:text-slate-300 text-sm font-semibold flex gap-2"
                   >
-                    *Phone Number
+                    Phone Number
+                    <span className="text-red-700">*</span>
                   </label>
                   <input
                     id="phoneNo"
@@ -315,9 +318,10 @@ export default function Register() {
                   <label
                     htmlFor="email"
                     className="text-slate-700
-                                         dark:text-slate-300 text-sm font-semibold"
+                                         dark:text-slate-300 text-sm font-semibold flex gap-2"
                   >
-                    *Email Address
+                    Email Address
+                    <span className="text-red-700">*</span>
                   </label>
                   <input
                     id="email"
@@ -344,9 +348,10 @@ export default function Register() {
                 <div className="flex flex-col gap-2">
                   <label
                     htmlFor="citizenshipNo"
-                    className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                    className="text-slate-700 dark:text-slate-300 text-sm font-semibold flex gap-2"
                   >
-                    *Citizenship Number
+                    Citizenship Number
+                    <span className="text-red-700">*</span>
                   </label>
                   <input
                     required
@@ -378,9 +383,10 @@ export default function Register() {
                   <label
                     htmlFor="voterId"
                     className="text-slate-700 dark:text-slate-300 
-                                        text-sm font-semibold"
+                                        text-sm font-semibold flex gap-2"
                   >
-                    *Voter ID
+                    Voter ID
+                    <span className="text-red-700">*</span>
                   </label>
                   <input
                     required
@@ -449,16 +455,9 @@ export default function Register() {
                   <div className="flex flex-col gap-2">
                     <label
                       htmlFor="province"
-                      className="text-slate-700 dark:text-slate-300 text-sm font-semibold flex items-center gap-2"
+                      className="text-slate-700 dark:text-slate-300 text-sm font-semibold flex gap-2"
                     >
-                      *Province
-                      {/* Info icon with tooltip */}
-                      <span
-                        className="material-symbols-outlined text-xs text-slate-400"
-                        title="State or Province of residence"
-                      >
-                        info
-                      </span>
+                      Province <span className="text-red-700">*</span>
                     </label>
                     <select
                       id="province"
@@ -494,9 +493,10 @@ export default function Register() {
                   <div className="flex flex-col gap-2">
                     <label
                       htmlFor="district"
-                      className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                      className="text-slate-700 dark:text-slate-300 text-sm font-semibold flex gap-2"
                     >
-                      *District
+                      District
+                      <span className="text-red-700">*</span>
                     </label>
                     <select
                       id="district"
@@ -572,9 +572,10 @@ export default function Register() {
                   <div className="flex flex-col gap-2">
                     <label
                       htmlFor="constituency"
-                      className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                      className="text-slate-700 dark:text-slate-300 text-sm font-semibold flex gap-2"
                     >
-                      *Electoral Constituency
+                      Electoral Constituency
+                      <span className="text-red-700">*</span>
                     </label>
                     <select
                       id="constituency"
@@ -678,9 +679,9 @@ export default function Register() {
                 <div className="flex flex-col gap-2">
                   <label
                     htmlFor="password"
-                    className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                    className="text-slate-700 dark:text-slate-300 text-sm font-semibold flex gap-2"
                   >
-                    *Password
+                    Password <span className="text-red-700">*</span>
                   </label>
                   <div className="relative">
                     <input
@@ -729,9 +730,9 @@ export default function Register() {
                 <div className="flex flex-col gap-2">
                   <label
                     htmlFor="repassword"
-                    className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
+                    className="text-slate-700 dark:text-slate-300 text-sm font-semibold flex gap-2"
                   >
-                    *Confirm Password
+                    Confirm Password <span className="text-red-700">*</span>
                   </label>
                   <div className="relative">
                     <input

@@ -38,9 +38,10 @@ export default function RegistrationStatus({
         <p className="text-sm text-slate-400 dark:text-slate-300">
           {status.state === "successful" &&
             "Your account has been successfully created. You can now log in using your credentials."}
-          {status.state === "failed" && status.error != null
-            ? status.error
-            : "There was an issue with your registration. Please try again or check your details."}
+          {status.state === "failed" &&
+            (status.error != null
+              ? status.error
+              : "There was an issue with your registration. Please try again or check your details.")}
         </p>
 
         {/* Navigation buttons */}
