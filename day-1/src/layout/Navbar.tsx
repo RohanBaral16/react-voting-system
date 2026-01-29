@@ -3,14 +3,16 @@ import { AuthContext } from "../context/authContext";
 import { useContext } from "react";
 import ToggleTheme from "../components/ui/ToogleTheme";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   async function userLogOut() {
     try {
       await logout();
+      navigate("/");
     } catch (err: any) {
       console.log("Logout error: ", err);
     }
@@ -46,11 +48,11 @@ lg:px-10 py-3 sticky top-0 z-50"
               className=" text-sm font-medium hover:text-primary transition-colors"
               to={user ? "/login" : "/dashboard"}
             >
-              {user ? "Home" : "Login"}
+              {user ? "Dashboard" : "Login"}
             </Link>
             <Link
               className=" text-sm font-medium hover:text-primary transition-colors"
-              to={user ? "#" : "/register"}
+              to={user ? "/faq" : "/register"}
             >
               {user ? "FAQ" : "Register"}
             </Link>
@@ -60,6 +62,20 @@ lg:px-10 py-3 sticky top-0 z-50"
             >
               Demo Booth
             </Link>
+            <Link
+              className=" text-sm font-medium hover:text-primary transition-colors"
+              to="/contact"
+            >
+              Contact Us
+            </Link>
+            {!user && (
+              <Link
+                className=" text-sm font-medium hover:text-primary transition-colors"
+                to="/faq"
+              >
+                FAQ
+              </Link>
+            )}
           </nav>
 
           <div className="flex justify-center gap-2 items-center">
@@ -122,14 +138,14 @@ lg:px-10 py-3 sticky top-0 z-50"
                 className=" text-lg font-medium"
                 to="/dashboard"
               >
-                Home
+                {user ? "Dashboard" : "Login"}
               </Link>
               <Link
                 onClick={() => setIsMenuOpen(false)}
                 className=" text-lg font-medium"
-                to="#"
+                to={user ? "/faq" : "/register"}
               >
-                FAQ
+                {user ? "FAQ" : "Register"}
               </Link>
               <Link
                 onClick={() => setIsMenuOpen(false)}
@@ -138,6 +154,15 @@ lg:px-10 py-3 sticky top-0 z-50"
               >
                 Demo Booth
               </Link>
+              {!user && (
+                <Link
+                  onClick={() => setIsMenuOpen(false)}
+                  className=" text-lg font-medium"
+                  to="/faq"
+                >
+                  FAQ
+                </Link>
+              )}
             </nav>
 
             {user && (

@@ -5,6 +5,7 @@ import VoterInfo from "./VoterInfo";
 import VotingStatus from "./VotingStatus";
 import VoteDashboardCard from "./components/VoteDashboardCard";
 import { checkVoteStatus } from "../../api/votingFetch";
+import BallotInfoDashBoardCard from "./components/BallotInfoDashBoardCard";
 
 export default function Dashboard() {
   const { user, loading } = useContext(AuthContext);
@@ -48,8 +49,12 @@ export default function Dashboard() {
     <main className="max-w-300 mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <VoterInfo />
       <VotingStatus hasVotedfptp={hasVoted.fptp} hasVotedpr={hasVoted.pr} />
-      <div>
+      <div className="flex flex-wrap justify-center items-baseline gap-x-20 gap-y-10">
         <VoteDashboardCard
+          hasVotedfptp={hasVoted.fptp}
+          hasVotedpr={hasVoted.pr}
+        />
+        <BallotInfoDashBoardCard
           hasVotedfptp={hasVoted.fptp}
           hasVotedpr={hasVoted.pr}
         />

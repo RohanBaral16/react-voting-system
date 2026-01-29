@@ -319,6 +319,7 @@ export default function Booth() {
       <div key={cand.id} className="md:hidden">
         {/* Mobile view: Compact row */}
         <div
+          role="button"
           className={`bg-white dark:bg-slate-800 rounded-3xl h-25 full overflow-hidden  flex items-center px-3 
            gap-3  mb-3 cursor-pointer transition-all ${
              selectedCandidateId === cand.id
@@ -514,6 +515,7 @@ export default function Booth() {
       <div key={party.id} className="md:hidden">
         {/* Mobile view: Compact row */}
         <div
+          role="button"
           className={`bg-white dark:bg-slate-800 rounded-3xl h-25 full overflow-hidden  flex items-center px-3 
            gap-3  mb-3 cursor-pointer transition-all ${
              selectedPartyId === party.id

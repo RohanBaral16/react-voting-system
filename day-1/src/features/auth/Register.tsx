@@ -341,6 +341,11 @@ export default function Register() {
                     placeholder="01-01-XXXXX"
                     {...register("citizenshipNo", {
                       required: "Citizenship no field is required",
+                      pattern: {
+                        value:
+                          /^(\d{2}-?\d{2}-?\d{2}-?\d+|\d{6}\/?\d{6}|\d{2}-?\d{2}-?\d{5}|\d+)$/,
+                        message: "Invalid citizenship number format",
+                      },
                     })}
                     className="w-full rounded-lg border border-slate-200 dark:border-slate-700
                                              bg-slate-50 dark:bg-slate-800 h-14 px-4 text-base text-slate-900
