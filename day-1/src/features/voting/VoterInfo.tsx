@@ -69,11 +69,9 @@ export default function VoterInfo() {
               </span>
             </div>
 
-            <div className="flex items-center gap-2 justify-center md:justify-start text-primary">
+            <div className="flex items-center gap-2 justify-center md:justify-start ">
               <span className="material-symbols-outlined text-sm">event</span>
-              <span className="text-sm font-bold italic underline">
-                General Election 2026
-              </span>
+              <span className="text-sm  italic ">General Election 2026</span>
             </div>
           </div>
         </div>

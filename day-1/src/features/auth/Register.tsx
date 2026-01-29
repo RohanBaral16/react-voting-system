@@ -44,10 +44,19 @@ export default function Register() {
     "personal" | "location" | "security" | "verification" | "review" | null
   >("personal");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [formCurrentStatus]);
+
+  // Reset form when user returns to registration after success/failure
+  useEffect(() => {
+    if (registrationStatus.state === "successful") {
+      reset();
+    }
+    setFormCurrentStatus("personal");
+  }, [registrationStatus.state, reset]);
 
   // useed styles
   const errorTextClass = "text-sm text-red-600";
@@ -64,6 +73,11 @@ export default function Register() {
   const constituency = watch("constituency");
   const localBody = watch("localBody");
   const wardNo = watch("wardNo");
+
+  const backButtonStyle = `w-full sm:w-auto px-10 py-4 bg-slate-100 dark:bg-slate-800
+                   hover:bg-slate-200 dark:hover:bg-slate-900 text-slate-950 dark:text-white font-bold rounded-lg 
+                   transition-all shadow-lg  flex items-center 
+                   justify-center gap-2  border border-slate-300 dark:border-slate-700`;
 
   const nextStep = async () => {
     let isValid = false;
@@ -612,16 +626,16 @@ export default function Register() {
               {/* Navigation Footer: Contains Back and Next/Submit buttons */}
               <div className="p-8 bg-slate-50 dark:bg-slate-800/50 flex flex-col sm:flex-row justify-between items-center gap-4">
                 {/* Back Button */}
-                <button
+                <Button
                   type="button"
                   onClick={() => {
                     setFormCurrentStatus("personal");
                   }}
-                  className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors font-medium"
+                  className={backButtonStyle}
                 >
                   <span className="material-symbols-outlined">arrow_back</span>
                   Back to Personal Info
-                </button>
+                </Button>
 
                 {/* Submit/Continue Button */}
                 <Button
@@ -629,7 +643,10 @@ export default function Register() {
                   onClick={() => {
                     nextStep();
                   }}
-                  className="w-full sm:w-auto px-10 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-all shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-10 py-4 bg-blue-600
+                   hover:bg-blue-700 text-white font-bold rounded-lg 
+                   transition-all shadow-lg shadow-blue-600/20 flex items-center 
+                   justify-center gap-2 "
                 >
                   Continue to Security
                   <span className="material-symbols-outlined">
@@ -719,7 +736,7 @@ export default function Register() {
                   <div className="relative">
                     <input
                       id="repassword"
-                      type={showPassword ? "text" : "password"}
+                      type={showConfirmPassword ? "text" : "password"}
                       placeholder="Re-enter password"
                       className="w-full rounded-lg text-slate-900 dark:text-white 
                                             border border-slate-200 dark:border-slate-700 bg-slate-50
@@ -735,13 +752,13 @@ export default function Register() {
 
                     <button
                       type="button"
-                      onClick={() => setShowPassword(!showPassword)}
+                      onClick={() => setShowConfirmPassword((prev) => !prev)}
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-gray-200"
                       aria-label={
                         showPassword ? "Hide password" : "Show password"
                       }
                     >
-                      {showPassword ? (
+                      {showConfirmPassword ? (
                         <IoEyeOff size={20} />
                       ) : (
                         <IoEye size={20} />
@@ -771,14 +788,14 @@ export default function Register() {
             {/* Navigation Footer */}
             <div className="p-8 bg-slate-50 dark:bg-slate-800/50 flex flex-col sm:flex-row justify-between items-center gap-4">
               {/* Back Button */}
-              <button
+              <Button
                 type="button"
                 onClick={() => setFormCurrentStatus("location")}
-                className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors font-medium"
+                className={backButtonStyle}
               >
                 <span className="material-symbols-outlined">arrow_back</span>
                 Back to Address
-              </button>
+              </Button>
 
               {/* Continue Button */}
               <Button
@@ -906,16 +923,16 @@ export default function Register() {
 
             {/* Navigation Footer */}
             <div className="p-8 bg-slate-50 dark:bg-slate-800/50 flex flex-col sm:flex-row justify-between items-center gap-4">
-              <button
+              <Button
                 type="button"
                 onClick={() => setFormCurrentStatus("personal")}
-                className="flex items-center gap-2 text-slate-600 dark:text-slate-400 font-bold hover:text-blue-600 transition-colors"
+                className={backButtonStyle}
               >
                 <span className="material-symbols-outlined text-lg">
                   arrow_back
                 </span>
                 Back to Edit
-              </button>
+              </Button>
 
               <button
                 type="submit"

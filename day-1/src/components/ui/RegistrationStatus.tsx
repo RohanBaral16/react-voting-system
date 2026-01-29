@@ -58,7 +58,9 @@ export default function RegistrationStatus({
             to="/register"
             className="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg font-medium text-white transition-colors"
           >
-            Go to Registration
+            {status.state === "failed"
+              ? "Edit Registration Form"
+              : "Go to Registration"}
           </Link>
         </div>
       </div>
