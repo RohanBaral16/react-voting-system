@@ -76,6 +76,7 @@ export default function Register() {
         "voterId",
         "citizenshipNo",
         "phoneNo",
+        "email",
       ]);
     } else if (formCurrentStatus === "location") {
       // Step 2 = location info
@@ -209,7 +210,7 @@ export default function Register() {
                     htmlFor="name"
                     className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
                   >
-                    Full Name
+                    *Full Name
                   </label>
                   <input
                     id="name"
@@ -241,7 +242,7 @@ export default function Register() {
                     className="text-slate-700 dark:text-slate-300 
                                         text-sm font-semibold"
                   >
-                    Date of Birth
+                    *Date of Birth
                   </label>
                   <input
                     id="dob"
@@ -272,7 +273,7 @@ export default function Register() {
                     className="text-slate-700
                                          dark:text-slate-300 text-sm font-semibold"
                   >
-                    Phone Number
+                    *Phone Number
                   </label>
                   <input
                     id="phoneNo"
@@ -302,7 +303,7 @@ export default function Register() {
                     className="text-slate-700
                                          dark:text-slate-300 text-sm font-semibold"
                   >
-                    Email Address
+                    *Email Address
                   </label>
                   <input
                     id="email"
@@ -331,7 +332,7 @@ export default function Register() {
                     htmlFor="citizenshipNo"
                     className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
                   >
-                    Citizenship Number
+                    *Citizenship Number
                   </label>
                   <input
                     required
@@ -360,7 +361,7 @@ export default function Register() {
                     className="text-slate-700 dark:text-slate-300 
                                         text-sm font-semibold"
                   >
-                    Voter ID
+                    *Voter ID
                   </label>
                   <input
                     required
@@ -386,6 +387,7 @@ export default function Register() {
                 <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                   Ensure all personal details match your official documents. Any
                   mismatch may delay or invalidate your voter registration.
+                  <br />* indicates a required field
                 </p>
               </div>
             </div>
@@ -430,7 +432,7 @@ export default function Register() {
                       htmlFor="province"
                       className="text-slate-700 dark:text-slate-300 text-sm font-semibold flex items-center gap-2"
                     >
-                      Province
+                      *Province
                       {/* Info icon with tooltip */}
                       <span
                         className="material-symbols-outlined text-xs text-slate-400"
@@ -475,7 +477,7 @@ export default function Register() {
                       htmlFor="district"
                       className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
                     >
-                      District
+                      *District
                     </label>
                     <select
                       id="district"
@@ -553,7 +555,7 @@ export default function Register() {
                       htmlFor="constituency"
                       className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
                     >
-                      Electoral Constituency
+                      *Electoral Constituency
                     </label>
                     <select
                       id="constituency"
@@ -655,7 +657,7 @@ export default function Register() {
                     htmlFor="password"
                     className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
                   >
-                    Password
+                    *Password
                   </label>
                   <div className="relative">
                     <input
@@ -706,7 +708,7 @@ export default function Register() {
                     htmlFor="repassword"
                     className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
                   >
-                    Confirm Password
+                    *Confirm Password
                   </label>
                   <div className="relative">
                     <input
