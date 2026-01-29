@@ -6,6 +6,7 @@ import VotingStatus from "./VotingStatus";
 import VoteDashboardCard from "./components/VoteDashboardCard";
 import { checkVoteStatus } from "../../api/votingFetch";
 import BallotInfoDashBoardCard from "./components/BallotInfoDashBoardCard";
+import ResultsDashboardCard from "./components/ResultsDashboardCard";
 
 export default function Dashboard() {
   const { user, loading } = useContext(AuthContext);
@@ -55,6 +56,10 @@ export default function Dashboard() {
           hasVotedpr={hasVoted.pr}
         />
         <BallotInfoDashBoardCard
+          hasVotedfptp={hasVoted.fptp}
+          hasVotedpr={hasVoted.pr}
+        />
+        <ResultsDashboardCard
           hasVotedfptp={hasVoted.fptp}
           hasVotedpr={hasVoted.pr}
         />

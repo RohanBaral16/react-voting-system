@@ -85,3 +85,14 @@ export const submitVotes = async ({
     throw new Error(error.response?.data?.error || "Vote submission failed");
   }
 };
+
+export const getCandidateResult = async () => {
+  try {
+    const res = await api.get("api/candidates/");
+    return res.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.error || "Voting status fetch failed",
+    );
+  }
+};

@@ -9,7 +9,14 @@ import PublicRoute from "./api/routes/PublicRoute";
 import FAQ from "./features/publicInfo/FAQ";
 import Contact from "./features/publicInfo/Contact";
 import BallotInfo from "./features/voting/BallotInfo";
-import { ElectionInfo, DemoBooth, CandidatesInfo } from "./features/publicInfo";
+import {
+  ElectionInfo,
+  DemoBooth,
+  CandidatesInfo,
+  ElectionResults,
+} from "./features/publicInfo";
+import PartyResultCard from "./components/ui/PartyResultCard";
+import CandidateResultCard from "./components/ui/CandidateResultCard";
 
 import ProtectedRoute from "./api/routes/ProtectedRoute";
 function App() {
@@ -74,6 +81,7 @@ function App() {
 
           <Route path="/candidates-info" element={<CandidatesInfo />} />
           <Route path="/election-info" element={<ElectionInfo />} />
+          <Route path="/results" element={<ElectionResults />} />
         </Route>
       </Routes>
     </>
