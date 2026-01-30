@@ -64,7 +64,7 @@ export default function VoterInfo() {
               <span className="text-sm font-medium">
                 Voter ID:{" "}
                 <span className="text-slate-900 dark:text-white font-bold">
-                  NP-KTM-2023-0092
+                  {user?.voter_id}
                 </span>
               </span>
             </div>

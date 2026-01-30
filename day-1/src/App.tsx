@@ -16,6 +16,7 @@ import {
   ElectionResults,
   Home,
 } from "./features/publicInfo";
+import NotFound from "./features/publicInfo/NotFound";
 
 import ProtectedRoute from "./api/routes/ProtectedRoute";
 function App() {
@@ -81,6 +82,7 @@ function App() {
           <Route path="/candidates-info" element={<CandidatesInfo />} />
           <Route path="/election-info" element={<ElectionInfo />} />
           <Route path="/results" element={<ElectionResults />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </>

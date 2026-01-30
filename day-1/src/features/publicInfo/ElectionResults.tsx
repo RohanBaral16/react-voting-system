@@ -43,11 +43,7 @@ export default function ElectionResults() {
 
         // Sort by total votes (descending)
         setPrResults(prData.sort((a, b) => b.total_votes - a.total_votes));
-        setFptpResults(
-          fptpData
-            .filter((c) => c.candidate__id !== null) // Filter out null candidates
-            .sort((a, b) => b.total_votes - a.total_votes),
-        );
+        setFptpResults(fptpData.sort((a, b) => b.total_votes - a.total_votes));
       } catch (err: any) {
         setError(err.message || "Failed to fetch results");
       } finally {
@@ -113,7 +109,7 @@ export default function ElectionResults() {
   }));
 
   const fptpChartData = filteredFptpResults.map((result) => ({
-    name: result.candidate__name || "NOTA/Invalid",
+    name: result.candidate__name || "NOTA",
     votes: result.total_votes,
     area: result.electoral_area__name,
   }));

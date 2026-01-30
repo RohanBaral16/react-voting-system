@@ -56,7 +56,7 @@ export default function Login() {
             E-Voting Login
           </h2>
           <p className="text-slate-500 dark:text-slate-400 text-base mt-2 max-w-lg mx-auto">
-            Enter your registered email and password to continue.
+            Enter your registered email / VoterId and password to continue.
           </p>
         </div>
 
@@ -66,12 +66,14 @@ export default function Login() {
             htmlFor="email"
             className="text-slate-700 dark:text-slate-300 text-sm font-semibold"
           >
-            Email
+            Email / VoterId
           </label>
           <Input
-            placeholder="your-email@evoting.org.np"
+            placeholder="your-email@evoting.org.np or 123XXX"
             variant="long"
-            {...register("email", { required: "Please enter your Email" })}
+            {...register("email", {
+              required: "Please enter your Email/VoterId",
+            })}
             className="w-full rounded-lg border border-slate-200 dark:border-slate-700
                                    bg-slate-50 dark:bg-slate-800 h-14 px-4 text-base text-slate-900 dark:text-white
                                    focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"

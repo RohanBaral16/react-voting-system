@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 
 export default function Home() {
@@ -9,16 +10,20 @@ export default function Home() {
             Secure • Transparent • Inclusive
           </div>
           <h2 className="text-4xl md:text-5xl font-black leading-tight">
-            A trusted digital gateway for Nepal’s elections
+            <span className="typewriter">
+              A trusted digital gateway for Nepal’s elections
+            </span>
           </h2>
           <p
             className="text-slate-800 dark:text-slate-300 text-lg 
           leading-relaxed lg:max-w-xl bg-slate-50/80 dark:bg-slate-900/80 border-l-10
            border-blue-500 px-5 py-2 rounded-lg "
           >
-            Explore candidates, verify your voter status, and experience the
-            voting process through secure, user‑friendly tools built for
-            transparency and public trust.
+            <span className="typewriter typewriter-delay">
+              Explore candidates, verify your voter status, and experience the
+              voting process through secure, user‑friendly tools built for
+              transparency and public trust.
+            </span>
           </p>
           <div className="flex flex-wrap gap-4 justify-center items-center">
             <Link

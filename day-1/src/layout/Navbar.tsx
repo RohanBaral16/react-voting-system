@@ -27,7 +27,7 @@ lg:px-10 py-3 sticky top-0 z-50"
     >
       <div className="w-full mx-auto flex items-center justify-between group/container">
         {/* Logo - Always visible */}
-        <Link to="/">
+        <Link to="/dashboard">
           <div className="flex items-center gap-4  mr-5">
             <div>
               <h2 className="text-sm md:text-lg font-bold leading-tight text-slate-950 dark:text-slate-50 tracking-tight transition-colors">

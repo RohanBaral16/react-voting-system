@@ -18,7 +18,7 @@ export default function CandidateResultCard({
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-            {result.candidate__name || "NOTA/Invalid"}
+            {result.candidate__name || "NOTA"}
           </h3>
           <p className="text-sm text-gray-600 dark:text-gray-400">
             {result.electoral_area__name}

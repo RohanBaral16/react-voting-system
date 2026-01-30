@@ -6,7 +6,7 @@ export const login = async (email: string, password: string) => {
   try {
     console.log({ email: email, password: password });
     const res = await api.post("api/voter/login/", {
-      email: email,
+      identifier: email,
       password: password,
     });
     return res.data;
@@ -40,6 +40,7 @@ export const registerUser = async (userData: RegistrationFormDataType) => {
   const requestBody = {
     name: userData.name,
     email: userData.email,
+    voter_id: userData.voterId,
     // dob: ,
     // voterId: ,
     // citizenshipNo: ,

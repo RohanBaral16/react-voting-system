@@ -12,6 +12,7 @@ import { type Dispatch, type SetStateAction } from "react";
 type UserType = {
   username: string;
   email: string;
+  voter_id: number;
   province: string;
   district: string;
   electoral_area: string;

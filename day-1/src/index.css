@@ -31,3 +31,86 @@
     @apply transition-colors duration-200 ease-in-out;
   }
 }
+
+@layer utilities {
+  .typewriter {
+    position: relative;
+    display: inline-block;
+    clip-path: inset(0 100% 0 0);
+    animation: typing var(--typewriter-duration, 2.8s)
+      steps(var(--typewriter-steps, 40), end) forwards;
+  }
+
+  .typewriter::after {
+    content: "";
+    position: absolute;
+    right: -2px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: currentColor;
+    animation: blink 0.75s step-end infinite;
+  }
+
+  .typewriter-line {
+    display: block;
+    width: max-content;
+    white-space: nowrap;
+    clip-path: inset(0 100% 0 0);
+    animation: typing var(--typewriter-duration, 2.8s)
+      steps(var(--typewriter-steps, 40), end) forwards;
+  }
+
+  .typewriter-caret {
+    position: relative;
+  }
+
+  .typewriter-caret::after {
+    content: "";
+    position: absolute;
+    right: -2px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: currentColor;
+    animation: blink 0.75s step-end infinite;
+  }
+
+  .typewriter-delay {
+    animation-delay: var(--typewriter-delay, 0s);
+  }
+
+  @keyframes typing {
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .typewriter {
+      animation: none;
+      clip-path: none;
+    }
+
+    .typewriter::after {
+      animation: none;
+      display: none;
+    }
+
+    .typewriter-line {
+      animation: none;
+      clip-path: none;
+    }
+
+    .typewriter-caret::after {
+      animation: none;
+      display: none;
+    }
+  }
+}
