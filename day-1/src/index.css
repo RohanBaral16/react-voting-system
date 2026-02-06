@@ -15,18 +15,20 @@
     color-scheme: dark;
   }
 
-  
-
   /* 2. REMOVE VITE DEFAULTS: 
      If Vite's default CSS is setting a background on #root or body, 
      this line will neutralize it so your MainLayout works. */
-  #root, body, html {
+  #root,
+  body,
+  html {
     background-color: transparent !important;
     margin: 0;
     padding: 0;
   }
 
-  *, ::after, ::before {
+  *,
+  ::after,
+  ::before {
     /* Transitions colors, backgrounds, and borders smoothly */
     @apply transition-colors duration-200 ease-in-out;
   }
